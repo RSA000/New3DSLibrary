@@ -32,23 +32,25 @@ var control = function(ev) {
 		}
 	};
 	
-	/* Not sure */
+	/* Display image when menu item is selected */
 	var active = function(ev) {
-		var top = document.getElementById("top");
+		var top = document.getElementById("upperScreen");
 		var value = this.style.background;
 		top.style.background = value;
 	};
 	
-	/* Not sure */
+	/* Function for setting top screen when inactive */
 	var inactive = function(ev) {
-		var top = document.getElementById("top");
-		top.style.background = "url("+DEFAULT+")";
+		/* Store html element "upperScreen in variable "upperScreen" */
+		var upperScreen = document.getElementById("upperScreen");
+		/* Set upperScreens background to default image url file */
+		upperScreen.style.background = "url("+DEFAULT+")";
 	};
 
 	/* Not familiar with syntax, displays image on hover */
 	document.addEventListener('DOMContentLoaded', function(ev) {
 		setInterval(center, 42);
-		var anchors = this.querySelectorAll("#bottom a[href$='.jpg']");
+		var anchors = this.querySelectorAll("#lowerScreen a[href$='.jpg']");
 		init(anchors);
 		inactive();
 		for(var i = 0, l = anchors.length; i<l; i++){
@@ -60,7 +62,7 @@ var control = function(ev) {
 	/* Same as previous chunk of code, but for mpo */
 	document.addEventListener('DOMContentLoaded', function(ev) {
 		setInterval(center, 42);
-		var anchors = this.querySelectorAll("#bottom a[href$='.mpo']");
+		var anchors = this.querySelectorAll("#lowerScreen a[href$='.mpo']");
 		init(anchors);
 		inactive();
 		for(var i = 0, l = anchors.length; i<l; i++){
