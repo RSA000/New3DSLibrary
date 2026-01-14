@@ -3,6 +3,8 @@ Online Library for 3DS
 
 ## Richard Sullivan Andison
 
+- A beta of the site can be found [here](https://rsa000.github.io/3DSLibrary/index.html)
+
 ### Example of an optimized website for nintendo 3DS :
 
  - Dual screen compatibility
@@ -52,9 +54,21 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
     * Updated README to include verbose control descriptions.
     * Included site design pdf to demos folder and placed early demos in their own seperate folder.
     
+    0.0.2 
+    
+    * Lost track of updating update notes, but changes can also be tracked via commit comments.
+    * Update README to reflect new changes (link to beta (or I guess pre-alpha?) version of the website).
+    * Updated and added comments to JavaScript code.
+    * Tweaked CSS.
+    * Updated HTML class names ("top" --> "upperScreen", "bottom" --> "lowerScreen")
+    * Added new credit, wolfyxon.
+     
+
 ----
 
 #### Credits
+ - [wolfyxon.github.io/3ds-web-stuff/](https://wolfyxon.github.io/3ds-web-stuff/) I haven't explored this repo much, but I love the site
+ design and intend to explore it further. This resource is what informed me to hosting sites via GitHub.
  - [simbas.github.com/n3dsite](http://simbas.github.com/n3dsite) This entire project was started by cloning this repo.
  - [3dbrew](https://www.3dbrew.org/wiki/Internet_Browser) for information about 3ds browser
  - [Project Gutenberg](https://gutenberg.org/) - I acquired the "nelly_bly.txt" test text from the site. 
