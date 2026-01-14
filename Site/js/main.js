@@ -20,12 +20,7 @@ var control = function(ev) {
 	/*This function continuously scrolls the screen to the 40,215 coordinates */
 	var center = function(){
 		/* Coordinates to set to */
-		window.scrollTo({
-			top: 40,
-			left: 215,
-			behavior: "instant",
-		});
-
+		window.scrollTo(40, 215);
 		/* Set scale? */
 		var scale = 'scale(1)';
 		document.body.style.webkitTransform =  scale;    // Chrome, Opera, Safari
@@ -61,7 +56,7 @@ var control = function(ev) {
 	/* When content is loaded */
 	document.addEventListener('DOMContentLoaded', function(ev) {
 		/* Call center function every 100 miliseconds*/
-		setInterval(center, 100);
+		setInterval(center, 1);
 
 		/* Store anchors of jpeg and mpo type in respective variables */
 		var jpgAnchors = this.querySelectorAll("#lowerScreen a[href$='.jpg']");
