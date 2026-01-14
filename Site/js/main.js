@@ -20,7 +20,12 @@ var control = function(ev) {
 	/*This function continuously scrolls the screen to the 40,215 coordinates */
 	var center = function(){
 		/* Coordinates to set to */
-		window.scrollTo(40, 215);
+		window.scrollTo({
+			top: 40,
+			left: 215,
+			behavior: "instant",
+		});
+
 		/* Set scale? */
 		var scale = 'scale(1)';
 		document.body.style.webkitTransform =  scale;    // Chrome, Opera, Safari
