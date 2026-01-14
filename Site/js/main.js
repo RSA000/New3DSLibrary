@@ -35,8 +35,8 @@ var control = function(ev) {
 	/* Display image when menu item is selected */
 	var active = function(ev) {
 		var top = document.getElementById("upperScreen");
-		var value = this.style.background;
-		top.style.background = value;
+		var value = this.getAttribute('description');
+		top.style.background = "url("+value+")";
 	};
 	
 	/* Function for setting top screen when inactive */
@@ -47,27 +47,26 @@ var control = function(ev) {
 		upperScreen.style.background = "url("+DEFAULT+")";
 	};
 
-	/* Not familiar with syntax, displays image on hover */
+	/* When content is loaded */
 	document.addEventListener('DOMContentLoaded', function(ev) {
-		setInterval(center, 42);
-		var anchors = this.querySelectorAll("#lowerScreen a[href$='.jpg']");
-		init(anchors);
-		inactive();
-		for(var i = 0, l = anchors.length; i<l; i++){
-			anchors[i].addEventListener('focus', active, false);
-			anchors[i].addEventListener('blur', inactive, false);
-		}
-	}, false);
+		/* Call center function every 100 miliseconds*/
+		setInterval(center, 100);
 
-	/* Same as previous chunk of code, but for mpo */
-	document.addEventListener('DOMContentLoaded', function(ev) {
-		setInterval(center, 42);
-		var anchors = this.querySelectorAll("#lowerScreen a[href$='.mpo']");
-		init(anchors);
+		/* Store anchors of jpeg and mpo type in respective variables */
+		var jpgAnchors = this.querySelectorAll("#lowerScreen a[href$='.jpg']");
+		var mpoAnchors = this.querySelectorAll("#lowerScreen a[href$='.mpo']");
+		init(jpgAnchors);
 		inactive();
-		for(var i = 0, l = anchors.length; i<l; i++){
-			anchors[i].addEventListener('focus', active, false);
-			anchors[i].addEventListener('blur', inactive, false);
+		for(var i = 0, l = jpgAnchors.length; i<l; i++){
+			jpgAnchors[i].addEventListener('focus', active, false);
+			jpgAnchors[i].addEventListener('blur', inactive, false);
+
+		}
+		init(mpoAnchors);
+		inactive();
+		for(var i = 0, l = mpoAnchors.length; i<l; i++){
+			mpoAnchors[i].addEventListener('focus', active, false);
+			mpoAnchors[i].addEventListener('blur', inactive, false);
 		}
 	}, false);
 

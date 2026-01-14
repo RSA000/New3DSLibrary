@@ -9,7 +9,8 @@ body > div {
 /*The "top" tag represents the top screen element */
 #upperScreen {
 	width: 400px;
-	height: 215px;
+	height: 240px;
+	padding: 2px;
 }
 
 #lowerScreen{
