@@ -62,6 +62,13 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
     * Tweaked CSS.
     * Updated HTML class names ("top" --> "upperScreen", "bottom" --> "lowerScreen")
     * Added new credit, wolfyxon.
+    
+    0.1.0
+    
+    * Home page is functioning, is centered, doesn't zoom, and the upper and lower screens have appropriate margins.
+    * Most changes where general tweaking to the css and JavaScript format. 
+    * The main menu selection scroll-menu elements each have an additional "description" attribute the points to a picture with the site description; this is used to display a description of the currently selected menu option. Currently, only the library has a corresponding information sheet that simply says "Text" in the centre.
+    
      
 
 ----

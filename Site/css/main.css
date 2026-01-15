@@ -1,41 +1,42 @@
 body, html {
-	margin: 0;
+	margin: auto;
 	background: black;
 }
 body > div {
-	overflow-x: hidden;
-	margin: 0 auto;
+
 }
+
 /*The "top" tag represents the top screen element */
 #upperScreen {
 	width: 400px;
 	height: 215px;
-	padding: 2px;
+	overflow: hidden;
 }
 
 #lowerScreen{
 	width: 320px;
-	height: 212px;
-	margin: 0 auto;
+	height: 240px;
+	margin-left:35px;
 }
 
 div.scrollmenu {
 	background-color: #ffb220;
 	white-space: nowrap;
-	overflow-y: scroll;
+	overflow-y: auto;
 	border-radius: 7%;
-	padding: 2px;
+	padding: 5px;
 }
 
 div.scrollmenu a {
 	margin: 6px 4px;
-	height:88px;
+	height:91px;
 	width: 308px;
 	display: block;
 	color: white;
 	text-align: center;
 	padding: 2px;
 	border-radius: 7%;
+	overflow-x: hidden;
 }
 
 div.scrollmenu a:hover {

@@ -16,17 +16,13 @@ var control = function(ev) {
 (function(){
 	/*The DEFAULT variable is displayed when no menu items on the lower screen are hovered over. */
 	var DEFAULT = 'img/MainMenu.jpg';
+	var forcePosition = true;
 	
 	/*This function continuously scrolls the screen to the 40,215 coordinates */
 	var center = function(){
-		/* Coordinates to set to */
-		window.scrollTo(40, 215);
-		/* Set scale? */
-		var scale = 'scale(1)';
-		document.body.style.webkitTransform =  scale;    // Chrome, Opera, Safari
-		document.body.style.msTransform =   scale;       // IE 9
-		document.body.style.transform = scale;     // General
-
+		window.setInterval(function() {
+			window.scrollTo(40, 215);
+		}, 0);
 	};
 	
 	/* Not sure */
@@ -55,7 +51,7 @@ var control = function(ev) {
 
 	/* When content is loaded */
 	document.addEventListener('DOMContentLoaded', function(ev) {
-		/* Call center function every 100 miliseconds*/
+		/* Call center function every milisecond*/
 		setInterval(center, 1);
 
 		/* Store anchors of jpeg and mpo type in respective variables */
@@ -66,7 +62,6 @@ var control = function(ev) {
 		for(var i = 0, l = jpgAnchors.length; i<l; i++){
 			jpgAnchors[i].addEventListener('focus', active, false);
 			jpgAnchors[i].addEventListener('blur', inactive, false);
-
 		}
 		init(mpoAnchors);
 		inactive();
