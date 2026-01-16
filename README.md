@@ -69,6 +69,16 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
     * Most changes where general tweaking to the css and JavaScript format. 
     * The main menu selection scroll-menu elements each have an additional "description" attribute the points to a picture with the site description; this is used to display a description of the currently selected menu option. Currently, only the library has a corresponding information sheet that simply says "Text" in the centre.
     
+    0.2.0
+    
+    * Home menu was tweaked to have more exact proportions.
+    * HTML adjusted so lower screen scrollable menu is nested in bottom div.
+    * Redundant JavaScript was removed.
+    * Cleaner CSS.
+    * Scrollable menu functions completely.
+    * Verbose commenting added to main menu HTML. 
+    
+    
      
 
 ----
