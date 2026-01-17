@@ -78,6 +78,13 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
     * Scrollable menu functions completely.
     * Verbose commenting added to main menu HTML. 
     
+    0.3.0
+    
+    * All main menu site links now navigate to a page except for the Bookmark option, which will be added later.
+    * Site background image added. The new structure was designed to be updated and changed easily. 
+    * Major tweaks to general CSS and HTML structure. This included nesting some dividers and elements, such as the upper screen text.
+    * Javascript code implemented for displaying title and description of each menu link.
+    * File structure updated according to GeeksforGeeks best practices tutorial.
     
      
 
@@ -88,4 +95,7 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
  design and intend to explore it further. This resource is what informed me to hosting sites via GitHub.
  - [simbas.github.com/n3dsite](http://simbas.github.com/n3dsite) This entire project was started by cloning this repo.
  - [3dbrew](https://www.3dbrew.org/wiki/Internet_Browser) for information about 3ds browser
+ - [GeeksforGeeks](https://www.geeksforgeeks.org/javascript/file-and-folder-organization-best-practices-for-web-development/) This provided a tutorial for structuring the site files.
  - [Project Gutenberg](https://gutenberg.org/) - I acquired the "nelly_bly.txt" test text from the site. 
+ - [Resource for starry background gif](https://pixabay.com/gifs/star-night-night-sky-dark-4773/) - Used for site background
+ - [Resource for candle gif](https://pixabay.com/gifs/candle-burning-warm-pixel-flame-17634/) - Used for general decoration
