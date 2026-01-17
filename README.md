@@ -13,23 +13,18 @@ Online Library for 3DS
     * A - Select.
     * B - Navigate to previous page.
     * Left/Right Triggers - Navigate to previous/next page.
-    * C-stick - Scroll.
-    * Left stick - Scroll.
     * D-pad - Select elements.
- - 3D images
 
 #### JavaScript
 
  - Vanilla JS
  - Based on focus/blur events
  - Use scrollTo() to prevent the user from scrolling
- - Selecting anchors via the CSS3 selector **a[href$='.mpo']**
 
 #### CSS
 
  - Top screen is 400x215px
  - Bottom screen is 320x220px
- - Use **background** property to preview the 3D images
 
 #### More
 
@@ -47,8 +42,9 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
     * Updated lower menu to be a vertical scrollable menu instead of grid system.
     * Updated HTML meta to include "initial-scale=1". This ensures that the screen loads at the correct scale. 
     * Updated JavaScript to include comments. 
-    * Added "Texts" files to store utf-8 formatted books from project Gutenberg.org. An example text of "Ten Days in the Madhouse"
-    by Nelly Bly as a future sample text. 
+    * Added "Texts" files to store utf-8 formatted books from project Gutenberg.org. An example text of 
+      "Ten Days in the Madhouse"
+      by Nelly Bly as a future sample text. 
     
     0.0.1
     
@@ -67,9 +63,11 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
     
     * Home page is functioning, is centered, doesn't zoom, and the upper and lower screens have appropriate margins.
     * Most changes invloved general tweaking to the css and JavaScript format. 
-    * The main menu selection scroll-menu elements each have an additional "description" attribute the points to a picture with the site description; 
-    this is used to display a description of the currently selected menu option. Currently, only the library has a corresponding information sheet that simply
-    says "Text" in the centre.
+    * The main menu selection scroll-menu elements each have an additional "description" attribute the points to a 
+      picture with the site description; 
+      this is used to display a description of the currently selected menu option. Currently,
+      only the library has a corresponding information sheet that simply
+      says "Text" in the centre.
     
     0.2.0
     
@@ -95,6 +93,9 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
     
     * Updated README; reduced line length of some entries and clarified some entries.
     
+    0.3.2
+    
+    * Updated READ; removed redundant elements and reduced README entry line lengths again.
      
 
 ----
