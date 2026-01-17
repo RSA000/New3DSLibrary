@@ -47,7 +47,8 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
     * Updated lower menu to be a vertical scrollable menu instead of grid system.
     * Updated HTML meta to include "initial-scale=1". This ensures that the screen loads at the correct scale. 
     * Updated JavaScript to include comments. 
-    * Added "Texts" files to store utf-8 formatted books from project Gutenberg.org. An example text of "Ten Days in the Madhouse" by Nelly Bly as a future sample text. 
+    * Added "Texts" files to store utf-8 formatted books from project Gutenberg.org. An example text of "Ten Days in the Madhouse"
+    by Nelly Bly as a future sample text. 
     
     0.0.1
     
@@ -56,8 +57,7 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
     
     0.0.2 
     
-    * Lost track of updating update notes, but changes can also be tracked via commit comments.
-    * Update README to reflect new changes (link to beta (or I guess pre-alpha?) version of the website).
+    * Updated README.
     * Updated and added comments to JavaScript code.
     * Tweaked CSS.
     * Updated HTML class names ("top" --> "upperScreen", "bottom" --> "lowerScreen")
@@ -66,8 +66,10 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
     0.1.0
     
     * Home page is functioning, is centered, doesn't zoom, and the upper and lower screens have appropriate margins.
-    * Most changes where general tweaking to the css and JavaScript format. 
-    * The main menu selection scroll-menu elements each have an additional "description" attribute the points to a picture with the site description; this is used to display a description of the currently selected menu option. Currently, only the library has a corresponding information sheet that simply says "Text" in the centre.
+    * Most changes invloved general tweaking to the css and JavaScript format. 
+    * The main menu selection scroll-menu elements each have an additional "description" attribute the points to a picture with the site description; 
+    this is used to display a description of the currently selected menu option. Currently, only the library has a corresponding information sheet that simply
+    says "Text" in the centre.
     
     0.2.0
     
@@ -82,9 +84,16 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
     
     * All main menu site links now navigate to a page except for the Bookmark option, which will be added later.
     * Site background image added. The new structure was designed to be updated and changed easily. 
-    * Major tweaks to general CSS and HTML structure. This included nesting some dividers and elements, such as the upper screen text.
+    * Major tweaks to general CSS and HTML structure. This included nesting some dividers and elements,
+    such as the upper screen text.
     * Javascript code implemented for displaying title and description of each menu link.
     * File structure updated according to GeeksforGeeks best practices tutorial.
+    * Added new credits for art assets
+    * CSS file for "about.html" is created for custom elements.
+    
+    0.3.1
+    
+    * Updated README; reduced line length of some entries and clarified some entries.
     
      
 
