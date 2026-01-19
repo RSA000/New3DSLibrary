@@ -96,6 +96,12 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
     0.3.2
     
     * Updated READ; removed redundant elements and reduced README entry line lengths again.
+    
+    0.4.0
+    
+    * Updated Javascript to change display depending of whether user accessed site via a desktop browser
+      or 3DS system.
+    * Updated HTML and CSS styles.
      
 
 ----
