@@ -102,6 +102,21 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
     * Updated Javascript to change display depending of whether user accessed site via a desktop browser
       or 3DS system.
     * Updated HTML and CSS styles.
+    
+    0.5.0
+    
+    * Added functionality to contacts page form.
+    * Added limited functionality to reading page.
+      * Currently, 5000 words are buffered from text before they are inserted into a single paragraph.
+      * Future updates will include finer granularity for formatting text when buffering and displaying.
+        (For example, starting a new paragraph tag to fille when an empty line is parsed, detecting titles, etc...). 
+    * Updated credits page.
+    * Overall major changes where implementing Javascript functionalities to contacts and reading.
+      * Note - adding a functioning, free, contact form was surprisingly easy.
+      * Note - Formatting text was difficult, especially because I had to discover the 3DS browser 
+               does not support fetch() through trial and error
+               and required some digging into XMLHTTPRequests to
+               accomodate this limitation. 
      
 
 ----

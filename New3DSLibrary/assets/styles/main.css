@@ -162,17 +162,68 @@ body, html {
 	overflow-y: scroll;
 }
 
-#feedbackFormText{
+
+#upperScreenRead{
 
 	/* Container */
-	height: 150px;
-	width: 290px;
+	height: 480px;
+	width: 400px;
+}
+
+
+#textContainerRead{
+
+	/* Container */
+	background: papayawhip;
+	height: 470px;
+	width: 295px;
+	margin: 5px auto;
+	overflow-y: scroll;
+	padding: 0 10px;
+
+	/* Text */
+	font-size: 13px;
+}
+
+
+#FeedbackForm{
+	/* Container */
+	margin: 5px 7px auto;
+}
+
+#feedbackFormName{
+
+	/* Container */
+	height: 30px;
+	width: 280px;
+	margin-bottom: 3px;
 	padding: 2px;
 }
 
-#feedbackButton{
+#feedbackFormEmail{
+
+	/* Container */
+	height: 30px;
+	width: 280px;
+	margin-bottom: 3px;
+	padding: 2px;
+
+}
+
+#feedbackFormMessage{
+
+	/* Container */
+	height: 80px;
+	width: 280px;
+	margin: audto;
+	padding: 2px;
+
+}
+
+#feedbackFormButton{
 
 	/* Container */
 	margin: 5px auto;
-	margin-left: 85px;
+	margin-left: 115px;
+
 }
