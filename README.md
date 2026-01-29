@@ -24,6 +24,7 @@ Online Library for 3DS
       navigating with D-pad (left, right, up and down).
     - Screen shaking still occurs from left joystick.
  - Used for updating menu headers and subtitles when a link is focused.
+ 
 #### CSS
 
  - Top screen is 400x215px
@@ -177,7 +178,8 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
     
       * File structure changes. (including removing redundant files and folders from this repo due to bad merging practices)
       * Cookie implmentations for current book page saving and theme setting.
-      * Added books (mostly from Canadian Project Gutenberg).
+      * Added books and images (mostly from Canadian Project Gutenberg).
+      * Added additional credits.
       * Themes implemented and added (themes can now be changed in settings).
       * Improved formatting for reading (using .html files instead of .txt), photos are now available for texts.
       * CSV file system implemented for populating book catalogue.
@@ -187,7 +189,8 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
       
       * Heading and subtitle tweaks (place-holders, empty scenarios)
       * Make theme buttons selectable via d-pad on 3DS.
-      * Arrange CSV
+      * Arrange CSV by alphabetical order and add better descriptions/titles.
+      * Add a table (potentially a credits table for specific Pixabay contributers).
 
 ----
 
