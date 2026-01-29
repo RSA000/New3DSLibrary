@@ -169,7 +169,25 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
       * How callbacks in Javascript can be used for sequence control for ansynchronous events.
         (This was important for requesting a text file via XMLHTTPRequests.)
       * Scoping in Javascript.
-      * 
+
+      
+    0.7.0
+    
+    Overview of update:
+    
+      * File structure changes. (including removing redundant files and folders from this repo due to bad merging practices)
+      * Cookie implmentations for current book page saving and theme setting.
+      * Added books (mostly from Canadian Project Gutenberg).
+      * Themes implemented and added (themes can now be changed in settings).
+      * Improved formatting for reading (using .html files instead of .txt), photos are now available for texts.
+      * CSV file system implemented for populating book catalogue.
+      * general improvements to HTML, CSS and Javascript.
+    
+    At this point I see myself only needing to implement a few tweaks before the site is fully functioning:
+      
+      * Heading and subtitle tweaks (place-holders, empty scenarios)
+      * Make theme buttons selectable via d-pad on 3DS.
+      * Arrange CSV
 
 ----
 
@@ -177,8 +195,8 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
  - [wolfyxon.github.io/3ds-web-stuff/](https://wolfyxon.github.io/3ds-web-stuff/) Provided several 
    functionalities for site and helped in understanding 3DS webprogramming quirks in general.
  - [simbas.github.com/n3dsite](http://simbas.github.com/n3dsite) This entire project was started by cloning this repo.
- - [3dbrew](https://www.3dbrew.org/wiki/Internet_Browser) for information about 3ds browser
+ - [3dbrew](https://www.3dbrew.org/wiki/Internet_Browser) for information about 3ds browser.
  - [GeeksforGeeks](https://www.geeksforgeeks.org/javascript/file-and-folder-organization-best-practices-for-web-development/) This provided a tutorial for structuring the site files.
- - [Project Gutenberg](https://gutenberg.org/) - I acquired the "nelly_bly.txt" test text from the site. 
- - [Resource for starry background gif](https://pixabay.com/gifs/star-night-night-sky-dark-4773/) - Used for site background
+ - [Project Gutenberg](https://gutenberg.org/) - For providing literature.
+ - [Resource for starry background gif](https://pixabay.com/gifs/star-night-night-sky-dark-4773/) - Used for site backgrounds.
  - [Resource for candle gif](https://pixabay.com/gifs/candle-burning-warm-pixel-flame-17634/) - Used for homescreen decoration.

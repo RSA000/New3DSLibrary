@@ -11,6 +11,8 @@
     const anchors = document.getElementsByTagName("a");
     const anchorLength = anchors.length;
 
+    /* Simba's */
+
     /* The active function changes the upper screen heading and subtitle the the selected elemements inner HTML and description attribute */
     var active = function(ev) {
         // get top screen Heading and subtitles and store in variables.
@@ -33,6 +35,7 @@
         topSubtitle.innerHTML = topSubtitle.dataset.description;
     };
 
+    /* End of Simbas */
 
     /**
      * Process keydown logic. Call this when using window.onkeydown, and you want to use the global.js input detection system
@@ -43,29 +46,35 @@
         preventKey(event);
         // Switch case for each button press code.
         switch(event.keyCode){
+            // Case for up button.
             case UP:
+                // If index is above 0.
                 if (index > 0){
+                    // Update index -1.
                     index -= 1;
-                    anchors[index].focus();
-                    console.log("up");
-                    break;
                 }
+                // If index is 0.
                 else{
+                    // Set index to last anchor.
                     index = anchorLength - 1
-                    anchors[index].focus();
-                    break;
                 }
+                // Focus on current index.
+                anchors[index].focus();
+                break;
+            // Case for down button.
             case DOWN:
+                // If index is not above anchorLength.
                 if (index < anchorLength -1){
+                    // Increment index.
                     index += 1;
-                    anchors[index].focus();
-                    console.log("down");
-                    break;
                 }
+                // If index is at last anchor.
                 else{
                     index = 0;
-                    anchors[index].focus();
                 }
+                // Focus on current anchor index.
+                anchors[index].focus();
+                break;
         }
     };
 
@@ -74,14 +83,15 @@
     /* When content is loaded. */
     document.addEventListener('DOMContentLoaded', function(ev) {
 
+        inactive();
+
         // Add event listener for when a key is pressed down.
         window.addEventListener("keydown", function(e) {
-            menuHandleKeyDown(e, document.getElementById('lowerScreenMenu'));
+            menuHandleKeyDown(e, document.getElementById('lowerScreenContents'));
         });
 
-        // Store all <a> tags within the "lowerScreenMenu" div in variable "anchors."
-        var anchors = this.querySelectorAll(".lowerScreenMenu a");
-        inactive();
+        // Store all <a> tags within the "lowerScreenContents" div in variable "anchors."
+        var anchors = this.querySelectorAll(".lowerScreenContents a");
         // For each anchor, add event listener.
         for(var i = 0, l = anchors.length; i<l; i++){
             // When focused on, apply active function with "this" selected anchor.

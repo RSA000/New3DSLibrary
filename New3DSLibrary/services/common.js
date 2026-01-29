@@ -1,68 +1,190 @@
-
 // Declare constant values for button input values.
 const LEFT = 37;
 const RIGHT = 39;
 const UP = 38;
 const DOWN = 40;
-const A = 65;
-
-/* The center function scrolls the screen to the 40,215 coordinates.*/
-function center(){
-    // Scroll to designated coordinates.
-    window.scrollTo(40,215);
-};
+const A = 13;
+// Declare constant value for special keys.
+const BACKSPACE = 8;
+const F5 = 116;
+const ENTER = 13;
+// Declare constant value for centering screen.
+const centerX = 152;
+const centerY = 277;
 
 
 /**
- * The scrollUp function scrolls the text container up
- * @param {element}
- * @param {Int}
+ * The center function scrolls the screen to the 115,266 coordinates.
  */
-function scroll(element, amount) {
-    console.log("Scrolling");
-    element.scrollTop -= amount;
-};
-
+function center(){
+    window.scrollTo(centerX, centerY);
+}
 
 
 /**
- * <<<<<<<<<<<<<<<<<  Wolfyxon's stuff >>>>>>>>>>>>>>>>>>>>>>>
+ *
+ * Create and insert a div in a parent element for DOM
+ *
+ * Example: loading site elements and templating.
+ *
+ * @param {childID} - new element's identification
+ * @param {parantID} - element to insert new div into.
+ * @param {innerHTMl} - HTML to insert into new div
+ *
+ */
+function insertElement(childID, parentID, innerHTML){
+
+    // Get parent element by id
+    var parentElement = document.getElementById(parentID);
+    // If parent element exists.
+    if (parentElement) {
+        // Create new div element and set inner html and id (<div id="childID">innerHTML</div>).
+        var newDiv = document.createElement("div");
+        newDiv.innerHTML = innerHTML;
+        newDiv.id = childID;
+        parentElement.appendChild(newDiv);
+    }
+    // Otherwise, log error.
+    else {
+        alert("Parent element not found");
+        console.error("Parent element not found");
+    }
+}
+
+
+//
+/**
+ * <<<<<<<<<<<<<<<<<  w3schools (modified) stuff >>>>>>>>>>>>>>>>>>>>>>>
+ * //////  https://www.w3schools.com/js/js_cookies.asp          ///////
+ * <<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ */
+
+
+/**
+ *
+ * setCookie creates a cookie (cname) with a value (cvalue)
+ * that expires in a set amount of days (exdays).
+ *
+ * @param {cname} - String
+ * @param {cvalue} - String
+ * @param {exdays} - Int.
+ *
+ */
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+
+function checkBookName() {
+    if (getCookie("bookname") != "") {
+        return;
+    }
+    else{
+        alert("No book found!\nPlease select a book from the catalogue first.");
+        window.location.replace("../index.html")
+    }
+}
+
+
+function checkTheme(){
+    // Get value of theme cookie.
+    var themeCookie = getCookie("theme");
+    // Get document CSS link elements (index and other pages).
+    var themeTag = document.getElementById("theme");
+    var indexThemeTag = document.getElementById("themeindex");
+
+    // Set theme if cookie exists.
+    if (themeCookie != "") {
+        // Case for pages in views folder.
+        if (themeTag != null){
+            themeTag.setAttribute("href", ("../assets/styles/" + themeCookie + ".css"));
+            setCookie("theme", themeCookie, 364);
+            return;
+        }
+        // Case for index.html page.
+        else if (indexThemeTag != null){
+            // Store all upper screen image elements in variable.
+            var images = document.querySelectorAll("img");
+            indexThemeTag.setAttribute("href", ("assets/styles/" + themeCookie + ".css"));
+            for (var i = 0; i < images.length; i++){
+                images[i].setAttribute('src', ("https://rsa000.github.io/3DSLibrary/assets/img/index/" + themeCookie + ".gif"));
+            }
+            setCookie("theme", themeCookie, 364);
+            return;
+        }
+    }
+    // Case for no theme set.
+    else{
+        alert("no theme set");
+        if (themeTag != null) themeTag.setAttribute('href', ("../assets/styles/starry.css"));
+        if (indexThemeTag != null) indexThemeTag.setAttribute('href', ("../assets/styles/starry.css"));
+        setCookie("theme", "starry", 364);
+        checkTheme();
+        return;
+    }
+}
+
+
+function changeTheme(themeName){
+    // Update cookie them to new theme name.
+    setCookie("theme", themeName, 364);
+    // Update theme.
+    checkTheme();
+}
+
+// End of w3schools.com
+
+/**
+ * <<<<<<<<<<<<<<<<<  Wolfyxon's (modified) stuff >>>>>>>>>>>>>>>>>>>>>>>
  * //////  https://github.com/Wolfyxon/3ds-web-stuff*  ///////
  * <<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
  */
 
-
+/**
+ * includes takes a container and a search element and returns a boolean value
+ * indicating if it exists within the container.
+ *
+ * @param {container}
+ * @param {search}
+ */
 function includes(container,search){
+    // If container is a string or an array.
     if (typeof(container) === 'string' || container instanceof Array){
+        // Return true if indexo of container search is not -1 (string case).
         return container.indexOf(search) !== -1;
     }
-
+    // Return true if container index is not undefined (array case).
     return container[search] !== undefined;
 }
 
 
+/**
+ * Function returns if system is 3DS and false otherwise.
+ */
 function is3DS(){
+    // If userAgent string is equal to "Nintendo 3DS"
     return includes(window.navigator.userAgent,"Nintendo 3DS");
 }
-
-/**
- *
- * This prevents the browser from moving the page using the arrow keys
- * @param {keyboardEvent} event
- */
-function preventKey(event){
-    if(event.keyCode === 8) return true; //backspace
-    if(event.keyCode === 116) return true; //f5
-    if(event.keyCode === 13) return true; //enter
-
-    // If event.charCode is not null or event key is not null and length is equal to 1.
-    if(event.charCode || (event.key && event.key.length === 1 ))
-        // allow character keys and return true.
-        return true;
-    // Otherwise, prevent default action for event and return false.
-    event.preventDefault();
-    return false;
-};
 
 
 /**
@@ -70,50 +192,79 @@ function preventKey(event){
  * @param {HTMLAnchorElement} a
  */
 function registerNon3DSlink(a){
+    // Add event listener for when anchor is clicked.
     a.addEventListener("click", function (e){
-        alert("The 3DS doesn't support that page. Please open \n\n" + a.href + "\n\non a external device (with a modern browser)");
+        // Alert that link is not supported.
+        alert("The 3DS doesn't support this page. Please open \n" + a.href + "\n on a modern browser)");
+        // Prevent default action (navigating to link).
         e.preventDefault();
-
         return false;
     }, false);
 }
 
+
+/**
+ *
+ * This prevents the browser from moving the page using the arrow keys
+ * @param {keyboardEvent} event
+ */
+function preventKey(event){
+    // Allow backspace, F5 (refresh), and ENTER.
+    var keyCode = event.keyCode;
+    if ((keyCode === BACKSPACE) || (keyCode === F5) || (keyCode === ENTER)){
+        return true;
+    }
+    // Allow character input.
+    if(event.charCode || (event.key && event.key.length === 1 ))
+        return true;
+    // Otherwise, prevent default action for event and return false.
+    else{
+        event.preventDefault();
+        return false;
+    }
+}
 // end of wolfyxon
 
 
 /*
- * Things within this function will not pollute global scope
+ * Function prepares and 3DS/Desktop-specific configurations when document is loaded.
  */
 (function(){
+
+
+
     /* When content is loaded. */
     document.addEventListener('DOMContentLoaded', function(ev) {
 
+        // Check current theme.
+        checkTheme();
 
-        /**
-         * <<<<<<<<<<<<<<<<<  Wolfyxon's stuff >>>>>>>>>>>>>>>>>>>>>>>
-         * //////  https://github.com/Wolfyxon/3ds-web-stuff*  ///////
-         * <<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-         */
-        // You can't access console logs on the 3DS, so it will show an alert when there's an error
-        if(is3DS()){
+        // If device is 3DS.
+        if (is3DS()){
+
+            // Add event listener alert error events (necessary to see errors on 3DS system)..
             window.addEventListener("error", function(e) {
                 alert(e.filename + ":" + e.lineno + " " + e.message);
-                return false;
             }, false);
 
-            // Call center function every miliseconds.
-            setInterval(center, 4);
-        }
-        // end of wolfyxon
 
-        // If the user agent does not contain "Nintendo 3DS"
-        else {
-            // Set body style to grid display.
-            document.body.style.display = 'grid';
-            // Set content to center.
-            document.body.style.justifyContent = 'center';
+
+            // Call center function every milisecond.
+            setInterval(center);
+
+            // Store all <a> tags within the "lowerScreenContents" div in variable "anchors."
+            var anchors = document.querySelectorAll("a");
+            // Add non-3DS compatible warning to any relevant anchors.
+            for(var i = 0, l = anchors.length; i<l; i++){
+                // If 3DS attribute exists, add warning to link.
+                if (anchors[i].getAttribute("nc")){
+                    registerNon3DSlink(anchors[i]);
+                }
+            }
         }
-        // Otherwise,
+        // Otherwise, set screen for desktop computers.
+        else{
+            document.body.style.margin = "10px auto";
+        }
     }, false);
-
 })()
