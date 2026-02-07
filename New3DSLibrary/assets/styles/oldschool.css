@@ -28,9 +28,8 @@ body {
 
 	/* Container */
 	background-image: inherit;
-	background-size: 300%;
-	border: 1px dashed white;
-	border-radius: 8%;
+	background-size: 15%;
+	border: 4px solid gray;
 	height: 90%;
 	width: 90%;
 	margin: auto;
@@ -44,45 +43,28 @@ body {
 	/* Container */
 	border-radius:8%;
 	height: 140px;
-	width: 335px;
+	width: 350px;
 	margin: auto;
-	padding-top: 20px;
+	padding-top: 5px;
 }
 
 
 /* Top Heading settings.*/
-.topHeading{
-
-	/* Container */
-	background: black;
-	border: 2px solid white;
-	height: 90x;
-	width: 290px;
-	margin: auto;
-
-	/* Text */
-	font-size: 27px;
-	text-align: center;
-	color: white;
-}
+.topHeading{background: gray; border: 2px solid white; width: 290px; margin: auto; font-size: 27px; text-align: center; color: white;}
 
 /* Top Subtitle settings.*/
 .topSubtitle{
 
 	/* Container */
-	background: black;
-	width: 190px;
-	margin: auto;
-	margin-top: 15px;
-	padding: 3px;
+	background: gray;
+	border: 2px solid white;
+	margin: 10px auto;
 
 	/* Text */
 	font-size:14px;
 	text-align: center;
-	color: white;
-
-
-
+	color: #ffebeb;
+	width: 200px;
 }
 
 /* Top Screen's images container. */
@@ -90,10 +72,9 @@ body {
 
 	/* Container */
 	margin: auto;
-	bottom: 25%;
+	bottom: 20%;
 	position: relative;
 
-	left: 3%;
 }
 
 /* Top screen lower left image. */
@@ -107,7 +88,7 @@ body {
 	position: relative;
 	height: 72px;
 	width: 60px;
-	left: auto;
+	left: 5px;
 }
 
 /* Top screen lower right image. */
@@ -121,7 +102,7 @@ body {
 	position: relative;
 	height: 72px;
 	width: 60px;
-	left: 56%;
+	left: 220px;
 }
 
 /* Lower screen settings.*/
@@ -130,16 +111,15 @@ body {
 	/* Container */
 	background-image: url("../../assets/img/backgrounds/oldschool.png");
 	height: 240px;
-  width: 320px;
-  margin: auto;
-  position: relative;
+	width: 320px;
+	margin: auto;
+	position: relative;
 }
 
 .lowerScreenContents{
 
 	/* Container */
-	border: 1px dashed white;
-	border-radius: 10%;
+	border: 4px solid gray;
 	height: 230px;
 	width: 280px;
 	margin: 5px auto;
@@ -150,12 +130,15 @@ body {
 .lowerScreenContents a {
 
 	/* Container */
-	background-color: #453112;
+	background-color: #2109;
+	border-radius:10%;
 	display: block;
-	margin: 6px 4px;
+	margin: 5px auto;
+	width: 90%;
+	padding:3px;
 
 	/* Text */
-	font-size: 25px;
+	font-size: 30px;
 	text-align: center;
 	color: white;
 }
@@ -168,7 +151,7 @@ body {
 }
 
 #lowerScreenSettings{
-	width: 280px;
+width: 280px;
 }
 
 .lowerScreenFeedback{
@@ -182,12 +165,12 @@ body {
 
 #lowerScreenGallery{
 
-	/* Container */
-	height: 210px;
-	width: 290px;
-	margin: 5px auto;
-	/*! margin-left: 10px; */
-	overflow-y: scroll;
+/* Container */
+height: 210px;
+width: 290px;
+margin: 5px auto;
+/*! margin-left: 10px; */
+overflow-y: scroll;
 
 }
 
@@ -203,107 +186,113 @@ body {
 }
 
 #catalogueOptions a{
-	border-radius: 10%;
+border-radius: 10%;
 
-	font-size: 12px;
+font-size: 12px;
 }
 
 #upperScreenRead{
 
-	/* Container */
-	height: 445px;
-	width: 394px;
+/* Container */
+height: 445px;
+width: 394px;
 
 }
 
 
 #galleryImages{
 
-	/* Container */
-	top: 10px;
-	margin: 0 30px auto;
-	position: relative;
+/* Container */
+top: 10px;
+margin: 0 30px auto;
+position: relative;
 
 }
 
 #galleryImage{
-	/* Container */
-	width: 300px;
-	height: 150px;
+/* Container */
+width: 300px;
+height: 150px;
 }
 
 
 #textContainerRead{
 
-	/* Container */
-	background: papayawhip;
-	height: 430px;
-	width: 294px;
-	margin: 2px auto;
-	overflow-y: scroll;
-	padding: 4px;
+/* Container */
+background: papayawhip;
+height: 430px;
+width: 294px;
+margin: 2px auto;
+overflow-y: scroll;
+padding: 4px;
 
 }
 
 #textContainerRead h1{
-	font-size: 16px;
+font-size: 16px;
 }
 
 #textContainerRead p{
-	font-size: 12px
+font-size: 12px
 }
 
 #themeSettings{
-	margin: 10px auto;
-	text-align: center;
+background: url(../../assets/img/backgrounds/oldschool.png);
+border: 5px solid gray;
+height: 80%;
+width: 200px;
+margin: 10px auto;
+text-align: center;
 }
-
 
 #themeSettings button{
-	width: 180px;
-	margin:5px auto;
+	
+background-color: gray;
+color: white;
+width: 175px;
+margin:5px auto;
+
 
 }
 
-
 #feedbackForm{
-	/* Container */
-	margin: 5px 7px auto;
+/* Container */
+margin: 5px 7px auto;
 }
 
 #feedbackFormName{
 
-	/* Container */
-	height: 30px;
-	width: 280px;
-	margin-bottom: 3px;
-	padding: 2px;
+/* Container */
+height: 30px;
+width: 280px;
+margin-bottom: 3px;
+padding: 2px;
 }
 
 #feedbackFormEmail{
 
-	/* Container */
-	height: 30px;
-	width: 280px;
-	margin-bottom: 3px;
-	padding: 2px;
+/* Container */
+height: 30px;
+width: 280px;
+margin-bottom: 3px;
+padding: 2px;
 
 }
 
 #feedbackFormMessage{
 
-	/* Container */
-	height: 80px;
-	width: 280px;
-	margin: audto;
-	padding: 2px;
+/* Container */
+height: 80px;
+width: 280px;
+margin: audto;
+padding: 2px;
 
 }
 
 #feedbackFormButton{
 
-	/* Container */
-	margin: 5px auto;
-	margin-left: 115px;
+/* Container */
+margin: 5px auto;
+margin-left: 115px;
 
 }

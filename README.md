@@ -191,6 +191,16 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
       * Make theme buttons selectable via d-pad on 3DS.
       * Arrange CSV by alphabetical order and add better descriptions/titles.
       * Add a table (potentially a credits table for specific Pixabay contributers).
+      
+    0.7.1
+    
+    Overview of update:
+    
+      * Updated commenting for all Javascript files.
+      * Added unit 4 Javascript proposal pdf.
+      * Removed some literature and left one example book (all books are
+        still available on testing site).
+      
 
 ----
 

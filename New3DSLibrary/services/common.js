@@ -14,7 +14,7 @@ const centerY = 277;
 
 
 /**
- * The center function scrolls the screen to the 115,266 coordinates.
+ * The center function scrolls the screen to the 152,277 coordinates.
  */
 function center(){
     window.scrollTo(centerX, centerY);
@@ -22,53 +22,18 @@ function center(){
 
 
 /**
- *
- * Create and insert a div in a parent element for DOM
- *
- * Example: loading site elements and templating.
- *
- * @param {childID} - new element's identification
- * @param {parantID} - element to insert new div into.
- * @param {innerHTMl} - HTML to insert into new div
- *
- */
-function insertElement(childID, parentID, innerHTML){
-
-    // Get parent element by id
-    var parentElement = document.getElementById(parentID);
-    // If parent element exists.
-    if (parentElement) {
-        // Create new div element and set inner html and id (<div id="childID">innerHTML</div>).
-        var newDiv = document.createElement("div");
-        newDiv.innerHTML = innerHTML;
-        newDiv.id = childID;
-        parentElement.appendChild(newDiv);
-    }
-    // Otherwise, log error.
-    else {
-        alert("Parent element not found");
-        console.error("Parent element not found");
-    }
-}
-
-
-//
-/**
  * <<<<<<<<<<<<<<<<<  w3schools (modified) stuff >>>>>>>>>>>>>>>>>>>>>>>
  * //////  https://www.w3schools.com/js/js_cookies.asp          ///////
  * <<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
  */
 
-
 /**
- *
  * setCookie creates a cookie (cname) with a value (cvalue)
  * that expires in a set amount of days (exdays).
  *
  * @param {cname} - String
  * @param {cvalue} - String
  * @param {exdays} - Int.
- *
  */
 function setCookie(cname, cvalue, exdays) {
     const d = new Date();
@@ -78,23 +43,37 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 
+/**
+ * Function returns value of a cookie if cname value is valid cookie name.
+ *
+ * @param {cname} - String
+ */
 function getCookie(cname) {
     var name = cname + "=";
+    // Get cookies and store in variable, split on semicolons and store in variable "ca"
     var decodedCookie = decodeURIComponent(document.cookie);
     var ca = decodedCookie.split(';');
+    // For length of split cookies.
     for(var i = 0; i <ca.length; i++) {
+        // Current cookie = cookie at index i.
         var c = ca[i];
         while (c.charAt(0) == ' ') {
+            // Remove first character from current cookie value.
             c = c.substring(1);
         }
+        // If Cookie matches name, return value of cookie.
         if (c.indexOf(name) == 0) {
             return c.substring(name.length, c.length);
         }
     }
     return "";
 }
+// End of w3schools.com
 
 
+/**
+ * Function alerts user if no bookname value is set to cookie and redirects to home page.
+ */
 function checkBookName() {
     if (getCookie("bookname") != "") {
         return;
@@ -106,6 +85,9 @@ function checkBookName() {
 }
 
 
+/**
+ * Function checks if a theme is set. If a theme is not set, default theme is set
+ */
 function checkTheme(){
     // Get value of theme cookie.
     var themeCookie = getCookie("theme");
@@ -126,6 +108,7 @@ function checkTheme(){
             // Store all upper screen image elements in variable.
             var images = document.querySelectorAll("img");
             indexThemeTag.setAttribute("href", ("assets/styles/" + themeCookie + ".css"));
+            // Set Home page upper screen photos.
             for (var i = 0; i < images.length; i++){
                 images[i].setAttribute('src', ("https://rsa000.github.io/3DSLibrary/assets/img/index/" + themeCookie + ".gif"));
             }
@@ -136,15 +119,20 @@ function checkTheme(){
     // Case for no theme set.
     else{
         alert("no theme set");
-        if (themeTag != null) themeTag.setAttribute('href', ("../assets/styles/starry.css"));
-        if (indexThemeTag != null) indexThemeTag.setAttribute('href', ("../assets/styles/starry.css"));
-        setCookie("theme", "starry", 364);
+        if (themeTag != null) themeTag.setAttribute('href', ("../assets/styles/globalvillage.css"));
+        if (indexThemeTag != null) indexThemeTag.setAttribute('href', ("../assets/styles/globalvillage.css"));
+        setCookie("theme", "globalvillage", 364);
         checkTheme();
         return;
     }
 }
 
 
+/**
+ * Function changes theme cookie value to passed vlaue.
+ *
+ * @param {String} themeName
+ */
 function changeTheme(themeName){
     // Update cookie them to new theme name.
     setCookie("theme", themeName, 364);
@@ -152,7 +140,6 @@ function changeTheme(themeName){
     checkTheme();
 }
 
-// End of w3schools.com
 
 /**
  * <<<<<<<<<<<<<<<<<  Wolfyxon's (modified) stuff >>>>>>>>>>>>>>>>>>>>>>>
@@ -164,8 +151,8 @@ function changeTheme(themeName){
  * includes takes a container and a search element and returns a boolean value
  * indicating if it exists within the container.
  *
- * @param {container}
- * @param {search}
+ * @param {container} - Container to serach in.
+ * @param {String} - String to check for.
  */
 function includes(container,search){
     // If container is a string or an array.
@@ -230,9 +217,6 @@ function preventKey(event){
  * Function prepares and 3DS/Desktop-specific configurations when document is loaded.
  */
 (function(){
-
-
-
     /* When content is loaded. */
     document.addEventListener('DOMContentLoaded', function(ev) {
 

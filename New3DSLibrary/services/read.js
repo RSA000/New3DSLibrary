@@ -57,7 +57,11 @@
         xhr.send();
     }
 
-
+    /**
+     * Function parses and returns list of HTML chunks.
+     *
+     * @param {String} - Text from literature in HTML format.
+     */
     function loadBook(text) {
         // Reset textChunks
         textChunks = [];
@@ -79,8 +83,8 @@
                 break;
             }
 
-            // Find end of the closing tag
-            var closeTagEnd = text.indexOf(">", closeTagStart);
+            // Find end position index of the closing tag
+            var closeTagEnd = text.indexOf("p>", closeTagStart);
             // If no closing tag found.
             if (closeTagEnd === -1) {
                 // Bad tag end,  add remaining text
@@ -92,7 +96,7 @@
             }
 
             // Add text up to and including the closing tag
-            var segmentEnd = closeTagEnd + 1; // include '>'
+            var segmentEnd = closeTagEnd + 2; // include 'p>'
             chunk += text.substring(position, segmentEnd);
             position = segmentEnd; // move past this tag
 
@@ -114,7 +118,6 @@
 
 
     /**
-     *
      * This function takes a number (0 or 1) that indicates the page direction and updates
      * the textContainerReader
      *
