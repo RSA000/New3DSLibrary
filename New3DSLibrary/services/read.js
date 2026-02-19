@@ -15,47 +15,12 @@
     var bookName = getCookie("bookname");
     // Get current book position cookie.
     var pageNum = parseInt(getCookie('pagenum'));
-
     // Create list variable for storing sub-divided book text.
     var textChunks = [];
     // Store textContainerRead element.
     var textContainer = document.getElementById('textContainerRead');
 
 
-
-    /**
-    *
-    * getText(url) returns a list of strings subdivided from a string acquired through an
-    * XMLHttpRequest to a passed url.
-    *
-    * @param {String} url
-    * @param {Function} callback
-    */
-    function getText(url, callback){
-        // Create a new XMLHttpRequest object and initialize a GET request to the passed url.
-        var xhr = new XMLHttpRequest();
-        // GET request using url, asychronous = true.
-        xhr.open('GET', url, true);
-        // Configure what function to perform when a state change occurs.
-        xhr.onreadystatechange = function() {
-            // A readyState value of 4 means GET state is done (4).
-            if (xhr.readyState === 4) {
-                // If status code is not an error.
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    // Send response text of request to callback function.
-                    if (callback) callback(xhr.responseText);
-                }
-                // Otherwise, log status and alert user.
-                else{
-                    console.error('Error loading text file:', xhr.statusText);
-                    alert("Error loading text file:" + xhr.statusText + url);
-                }
-            }
-
-        };
-        // Send request.
-        xhr.send();
-    }
 
     /**
      * Function parses and returns list of HTML chunks.
@@ -82,7 +47,6 @@
                 }
                 break;
             }
-
             // Find end position index of the closing tag
             var closeTagEnd = text.indexOf("p>", closeTagStart);
             // If no closing tag found.
@@ -94,7 +58,6 @@
                 }
                 break;
             }
-
             // Add text up to and including the closing tag
             var segmentEnd = closeTagEnd + 2; // include 'p>'
             chunk += text.substring(position, segmentEnd);
@@ -110,7 +73,6 @@
         if (chunk.length > 0) {
             textChunks.push(chunk);
         }
-
         // Get length of pages and update page.
         pages = textChunks.length;
         updatePage(pageNum);
@@ -178,12 +140,12 @@
 
     // Add event listener for when content is loaded.
     document.addEventListener('DOMContentLoaded', function(ev) {
+
+        window.removeEventListener("keydown", handleKeyDown);
+
         // Add event listener for when a key is pressed down.
         window.addEventListener("keydown", function(e) {
             readHandleKeyDown(e, document.getElementById('textContainerRead'));
-        });
-        window.addEventListener("keyUp", function(e){
-           preventKey(e);
         });
 
         // Get book text and load into textContainerRead paragraph element in read.html.

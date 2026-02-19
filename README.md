@@ -200,6 +200,20 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
       * Added unit 4 Javascript proposal pdf.
       * Removed some literature and left one example book (all books are
         still available on testing site).
+        
+        
+    0.8.0
+    
+    Overview of update:
+    
+      * Updated JavaScript. menu.js and settings.js removed; script functionalities 
+        transferred to common.js
+      * New Script structure removes redundancies.
+      * Functionalities for button selection needed to be redone.
+      * Functionalities for overiding default controls implemented for read.js and 
+        gallery.js.
+      * The first stage of development is completed, next updated will see additional
+        features implemented.
       
 
 ----

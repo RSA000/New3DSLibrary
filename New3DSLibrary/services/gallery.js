@@ -1,9 +1,8 @@
 
 (function(){
-
     // Store document elements for images, number of images, and set index.
-    const slides = document.getElementsByClassName("mySlides");
-    const slideLength = slides.length;
+    var slides = document.getElementsByClassName("mySlides");
+    var slideLength = slides.length;
     var galleryImage = document.getElementById("galleryImage");
     var index = 0;
 
@@ -60,6 +59,11 @@
 
     /* When content is loaded. */
     document.addEventListener('DOMContentLoaded', function(ev) {
+        window.removeEventListener("keydown", handleKeyDown);
+
+
+
+
 
         // Add event listener for when a key is pressed down.
         window.addEventListener("keydown", function(e) {

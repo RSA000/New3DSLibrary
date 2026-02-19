@@ -72,7 +72,7 @@ body {
 	/* Container */
 	background: black;
 	height:20px;
-	width: min-content;
+	width: 235px;
 	margin: auto;
 	margin-top: 15px;
 	padding: 3px;
@@ -95,7 +95,7 @@ body {
 }
 
 /* Top screen lower left image. */
-.indexScreenUpperLeftPhoto{
+#indexScreenUpperLeftPhoto{
 
 	/* Container */
 	background: #000;
@@ -109,7 +109,7 @@ body {
 }
 
 /* Top screen lower right image. */
-.indexScreenUpperRightPhoto{
+#indexScreenUpperRightPhoto{
 
 	/* Container */
 	background: #000;
@@ -203,7 +203,7 @@ body {
 #catalogueOptions a{
 	border-radius: 10%;
 
-	font-size: 12px;
+	font-size: 16px;
 }
 
 #upperScreenRead{

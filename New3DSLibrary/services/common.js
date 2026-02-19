@@ -12,12 +12,49 @@ const ENTER = 13;
 const centerX = 152;
 const centerY = 277;
 
+// Set index and get elements tags.
+var index = 0;
+
 
 /**
  * The center function scrolls the screen to the 152,277 coordinates.
  */
 function center(){
     window.scrollTo(centerX, centerY);
+}
+
+
+/**
+ *
+ * getText(url) returns a list of strings subdivided from a string acquired through an
+ * XMLHttpRequest to a passed url.
+ *
+ * @param {String} url
+ * @param {Function} callback
+ */
+function getText(url, callback){
+    // Create a new XMLHttpRequest object and initialize a GET request to the passed url.
+    var xhr = new XMLHttpRequest();
+    // GET request using url, asychronous = true.
+    xhr.open('GET', url, true);
+    // Configure what function to perform when a state change occurs.
+    xhr.onreadystatechange = function() {
+        // A readyState value of 4 means GET state is done (4).
+        if (xhr.readyState === 4) {
+            // If status code is not an error.
+            if (xhr.status >= 200 && xhr.status < 300) {
+                // Send response text of request to callback function.
+                if (callback) callback(xhr.responseText);
+            }
+            // Otherwise, log status and alert user.
+            else{
+                console.error('Error loading text file:', xhr.statusText);
+                alert("Error loading text file:" + xhr.statusText + url);
+            }
+        }
+    };
+    // Send request.
+    xhr.send();
 }
 
 
@@ -106,7 +143,7 @@ function checkTheme(){
         // Case for index.html page.
         else if (indexThemeTag != null){
             // Store all upper screen image elements in variable.
-            var images = document.querySelectorAll("img");
+            var images = document.getElementsByClassName("upperScreenImages")[0].querySelectorAll("img");
             indexThemeTag.setAttribute("href", ("assets/styles/" + themeCookie + ".css"));
             // Set Home page upper screen photos.
             for (var i = 0; i < images.length; i++){
@@ -138,6 +175,135 @@ function changeTheme(themeName){
     setCookie("theme", themeName, 364);
     // Update theme.
     checkTheme();
+}
+
+
+/* Simba's (modified) stuff*/
+
+/* The active function changes the upper screen heading and subtitle the the selected elemements inner HTML and description attribute */
+var active = function(ev) {
+    // get top screen Heading and subtitles and store in variables.
+    var topHeading = document.getElementsByClassName("topHeading")[0];
+    var topSubtitle = document.getElementsByClassName("topSubtitle")[0];
+    // Get innerHTML and description attributes of current element.
+    // Update innerHTML of top heading and subtitle to heading and subtitle values.
+    topHeading.innerHTML = this.innerHTML;
+    topSubtitle.innerHTML = this.dataset.text;
+};
+
+
+/*Function returns title to original message when no items are selected. */
+var inactive = function(ev) {
+    // Get top heading and subtitle tags (<h1> and <p>, respectively).
+    var topHeading = document.getElementsByClassName("topHeading")[0];
+    var topSubtitle = document.getElementsByClassName("topSubtitle")[0];
+    // Update heading and subtitle.
+    topHeading.innerHTML = topHeading.dataset.text;
+    topSubtitle.innerHTML = topSubtitle.dataset.text;
+};
+
+/* End of Simbas */
+
+
+var  bttnClick = function(ev){
+    // If keydown is A key
+    if ((ev.keyCode === 32) || (ev.keyCode == 13)){
+        changeTheme(this.dataset.name);
+    }
+};
+
+
+var  bttnClickMouse = function(ev){
+    // If keydown is A key
+    changeTheme(this.dataset.name);
+};
+
+
+/**
+ * Function updates bookname and pagenum cookie values before redirecting page.
+ *
+ * @param {event}
+ */
+var catClick = function(ev) {
+    var bookName = this.dataset.bookname;
+    setCookie("bookname", bookName, 364);
+    setCookie("pagenum", 0, 364);
+    window.location.href = "./read.html";
+};
+
+
+
+/**
+ *
+ * This prevents the browser from moving the page using the arrow keys
+ * @param {keyboardEvent} event
+ */
+function preventKey(event){
+    // Allow backspace, F5 (refresh), and ENTER.
+    var keyCode = event.keyCode;
+    if ((keyCode === BACKSPACE) || (keyCode === F5) || (keyCode == ENTER)){
+        return true;
+    }
+    // Allow character input.
+    if(event.charCode || (event.key && event.key.length === 1 ))
+        return true;
+    // Otherwise, prevent default action for event and return false.
+    else{
+        event.preventDefault();
+        return false;
+    }
+}
+// end of wolfyxon
+
+
+/**
+ * Process keydown logic. Call this when using window.onkeydown, and you want to use the global.js input detection system
+ * @param {KeyboardEvent} event
+ */
+function menuHandleKeyDown(event, element){
+    // Prevent default action when key is pressed down.
+    preventKey(event);
+
+    var elements = document.querySelectorAll('a, button');
+
+    if (elements.length > 0){
+        // Switch case for each button press code.
+        switch(event.keyCode){
+            // Case for up button.
+            case UP:
+                // If index is above 0.
+                if (index > 0){
+                    // Update index -1.
+                    index -= 1;
+                }
+                // If index is 0.
+                else{
+                    // Set index to last elements.
+                    index = elements.length - 1
+                }
+                // Focus on current index.
+                elements[index].focus();
+                break;
+                // Case for down button.
+            case DOWN:
+                // If index is not above elementsLength.
+                if (index < elements.length -1){
+                    // Increment index.
+                    index += 1;
+                }
+                // If index is at last elements.
+                else{
+                    index = 0;
+                }
+                // Focus on current elements index.
+                elements[index].focus();
+                break;
+        }
+    }
+}
+
+function handleKeyDown(e) {
+    menuHandleKeyDown(e, document.getElementById('lowerScreenContents'));
 }
 
 
@@ -176,10 +342,10 @@ function is3DS(){
 
 /**
  * Register an <a> that isn't meant to be opened on the 3DS
- * @param {HTMLAnchorElement} a
+ * @param {HTMLelementsElement} a
  */
 function registerNon3DSlink(a){
-    // Add event listener for when anchor is clicked.
+    // Add event listener for when elements is clicked.
     a.addEventListener("click", function (e){
         // Alert that link is not supported.
         alert("The 3DS doesn't support this page. Please open \n" + a.href + "\n on a modern browser)");
@@ -190,27 +356,6 @@ function registerNon3DSlink(a){
 }
 
 
-/**
- *
- * This prevents the browser from moving the page using the arrow keys
- * @param {keyboardEvent} event
- */
-function preventKey(event){
-    // Allow backspace, F5 (refresh), and ENTER.
-    var keyCode = event.keyCode;
-    if ((keyCode === BACKSPACE) || (keyCode === F5) || (keyCode === ENTER)){
-        return true;
-    }
-    // Allow character input.
-    if(event.charCode || (event.key && event.key.length === 1 ))
-        return true;
-    // Otherwise, prevent default action for event and return false.
-    else{
-        event.preventDefault();
-        return false;
-    }
-}
-// end of wolfyxon
 
 
 /*
@@ -219,9 +364,37 @@ function preventKey(event){
 (function(){
     /* When content is loaded. */
     document.addEventListener('DOMContentLoaded', function(ev) {
+        var elements = document.querySelectorAll('a, button');
+        index = 0;
 
+        // Call center function every milisecond.
+        setInterval(center);
         // Check current theme.
         checkTheme();
+
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        // For each elements, add event listener.
+        for(var i = 0, l = elements.length; i<l; i++){
+            // For each elements, add event listener.
+
+            elements[i].setAttribute('tabindex', i);
+            // When focused on, apply active function with "this" selected elements.
+            elements[i].addEventListener('focus', active, false);
+            // When no elements are selected, revert to greeting heading and subtitle.
+            elements[i].addEventListener('blur', inactive, false);
+
+            if (elements[i].dataset.type === 'btn') {
+                elements[i].addEventListener("keydown", bttnClick, false);
+                elements[i].addEventListener("click", bttnClickMouse, false);
+            }
+
+        }
+
+
+
+
 
         // If device is 3DS.
         if (is3DS()){
@@ -231,18 +404,11 @@ function preventKey(event){
                 alert(e.filename + ":" + e.lineno + " " + e.message);
             }, false);
 
-
-
-            // Call center function every milisecond.
-            setInterval(center);
-
-            // Store all <a> tags within the "lowerScreenContents" div in variable "anchors."
-            var anchors = document.querySelectorAll("a");
-            // Add non-3DS compatible warning to any relevant anchors.
-            for(var i = 0, l = anchors.length; i<l; i++){
+            // Add non-3DS compatible warning to any relevant elements.
+            for(var i = 0, l = elements.length; i<l; i++){
                 // If 3DS attribute exists, add warning to link.
-                if (anchors[i].getAttribute("nc")){
-                    registerNon3DSlink(anchors[i]);
+                if (elements[i].getAttribute("nc")){
+                    registerNon3DSlink(elements[i]);
                 }
             }
         }
