@@ -13,13 +13,37 @@
 
     // Get current book name.
     var bookName = getCookie("bookname");
+    var pages = 0;
     // Get current book position cookie.
     var pageNum = parseInt(getCookie('pagenum'));
     // Create list variable for storing sub-divided book text.
     var textChunks = [];
     // Store textContainerRead element.
     var textContainer = document.getElementById('textContainerRead');
+    var pageIndex = document.getElementById("pageindex");
+    var viewToggle = document.getElementById("viewToggle");
+    var currentView = 0;
 
+
+
+
+
+    /**
+     * This function takes a number (0 or 1) that indicates the page direction and updates
+     * the textContainerReader
+     *
+     * @param {Int} Int.
+     *
+     */
+    function updatePage(pageNum){
+
+        // Display previous page.
+        textContainer.innerHTML = textChunks[pageNum];
+        textContainer.scrollTop = 0;
+        pageIndex.value = pageNum;
+        checkFontSize();
+        return;
+    }
 
 
     /**
@@ -80,22 +104,6 @@
 
 
     /**
-     * This function takes a number (0 or 1) that indicates the page direction and updates
-     * the textContainerReader
-     *
-     * @param {Int} Int.
-     *
-     */
-    function updatePage(pageNum){
-
-        // Display previous page.
-        textContainer.innerHTML = textChunks[pageNum];
-        textContainer.scrollTop = 0;
-        return;
-    }
-
-
-    /**
      * Process keydown logic. Call this when using window.onkeydown, and you want to use the global.js input detection system
      *
      * @param {event} keyBoardEvent.
@@ -141,7 +149,42 @@
     // Add event listener for when content is loaded.
     document.addEventListener('DOMContentLoaded', function(ev) {
 
+         viewToggle.addEventListener("click", function(ev){
+             if (currentView === 0){
+                 textContainer.style.height = "185px";
+                 viewToggle.style.marginTop = "100px";
+                 currentView = 1;
+             }
+             else if (currentView === 1){
+                 textContainer.style.height = "175px";
+                 textContainer.style.width = "310px";
+                 textContainer.style.top = "215px";
+                 viewToggle.style.marginTop = "0px";
+                 pageIndex.style.top = "220px";
+                 viewToggle.style.top = "220px";
+                 currentView = 2;
+             }
+             else if (currentView === 2){
+                 textContainer.style.height = "400px";
+                 textContainer.style.width = "294px";
+                 textContainer.style.top = "5px";
+                 pageIndex.style.top = "0px";
+                 viewToggle.style.top = "0px";
+                 currentView = 0;
+             }
+
+         });
+
         window.removeEventListener("keydown", handleKeyDown);
+
+
+        // Add event listener for when a key is pressed down.
+        pageIndex.addEventListener("keypress", function(e) {
+            if (e.keyCode === ENTER){
+                updatePage(pageIndex.value);
+            }
+        });
+
 
         // Add event listener for when a key is pressed down.
         window.addEventListener("keydown", function(e) {

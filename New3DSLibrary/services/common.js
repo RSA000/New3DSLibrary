@@ -81,6 +81,36 @@ function setCookie(cname, cvalue, exdays) {
 
 
 /**
+ * Function checks cookie, "fontsize," value and updates elements accordingly.
+ * If no font is set, medium (13) is set.
+ */
+function checkFontSize(){
+    var fontSize = parseInt(getCookie("fontsize"));
+    if (fontSize){
+        var divs = document.getElementsByTagName("div");
+        for (var i = 0; i < divs.length; i++){
+            divs[i].style.fontSize = (fontSize + 3) + "px";
+        }
+        var paragraphs = document.getElementsByTagName("p");
+        for (var i = 0; i < paragraphs.length; i++) {
+            paragraphs[i].style.fontSize = fontSize + "px";
+        }
+        var spans = document.getElementsByTagName("span");
+        for (var i = 0; i < spans.length; i++){
+            spans[i].style.fontSize = (fontSize + 1) + "px";
+        }
+        return;
+    }
+    else{
+        alert("No font size found\nDefault set (13px)")
+        setCookie("fontsize", "13", 364);
+        checkFontSize();
+        return;
+    }
+}
+
+
+/**
  * Function returns value of a cookie if cname value is valid cookie name.
  *
  * @param {cname} - String
@@ -216,6 +246,45 @@ var  bttnClick = function(ev){
 var  bttnClickMouse = function(ev){
     // If keydown is A key
     changeTheme(this.dataset.name);
+};
+
+
+var  bttnfClick = function(ev){
+    var currentFont = parseInt(getCookie("fontsize"));
+    var currentSubtitle = document.getElementsByClassName("topSubtitle")[0];
+    // If keydown is A key
+    if ((ev.keyCode === 32) || (ev.keyCode == 13)){
+        if ((this.dataset.name === "up") && (currentFont < 18)){
+            setCookie("fontsize", currentFont + 1, 364);
+            currentSubtitle.innerHTML = "Current Size: " + (currentFont + 1);
+            currentSubtitle.style.fontSize = (currentFont + 1) + "px";
+        }
+       else if ((this.dataset.name === "down") && (currentFont > 10)){
+            setCookie("fontsize", currentFont - 1, 364);
+            currentSubtitle.innerHTML = "Current Size: " + (currentFont - 1);
+            currentSubtitle.style.fontSize = (currentFont - 1) + "px";
+
+
+        }
+    }
+};
+
+
+var  bttnfClickMouse = function(ev){
+    // If keydown is A key
+    var currentFont = parseInt(getCookie("fontsize"));
+    var currentSubtitle = document.getElementsByClassName("topSubtitle")[0];
+
+    if ((this.dataset.name === "up") && (currentFont < 18)){
+        setCookie("fontsize", currentFont + 1, 364);
+        currentSubtitle.innerHTML = "Current Size: " + (currentFont + 1);
+        currentSubtitle.style.fontSize = (currentFont + 1) + "px";
+    }
+    else if ((this.dataset.name === "down") && (currentFont > 10)){
+        setCookie("fontsize", currentFont - 1, 364);
+        currentSubtitle.innerHTML = "Current Size: " + (currentFont - 1);
+        currentSubtitle.style.fontSize = (currentFont - 1) + "px";
+    }
 };
 
 
@@ -371,6 +440,8 @@ function registerNon3DSlink(a){
         setInterval(center);
         // Check current theme.
         checkTheme();
+        checkFontSize();
+
 
 
         window.addEventListener("keydown", handleKeyDown);
@@ -388,6 +459,12 @@ function registerNon3DSlink(a){
             if (elements[i].dataset.type === 'btn') {
                 elements[i].addEventListener("keydown", bttnClick, false);
                 elements[i].addEventListener("click", bttnClickMouse, false);
+            }
+
+
+            if (elements[i].dataset.type === 'btnf') {
+                elements[i].addEventListener("keydown", bttnfClick, false);
+                elements[i].addEventListener("click", bttnfClickMouse, false);
             }
 
         }

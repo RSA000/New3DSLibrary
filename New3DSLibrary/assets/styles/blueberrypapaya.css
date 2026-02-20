@@ -204,7 +204,7 @@ font-size: 16px;
 
 /* Container */
 background-color: #c0a883;
-height: 445px;
+height: 450px;
 width: 394px;
 
 }
@@ -228,13 +228,12 @@ height: 150px;
 
 /* Container */
 background-color: #c0a883;
-height: 396px;
-width: 295px;
+height: 400px;
+width: 294px;
 margin: 2px auto;
 overflow-y: scroll;
-padding: 8px;
-font-size: 13px;
-top: 15px;
+padding: 10px;
+top: 5px;
 position: relative;
 }
 
@@ -257,6 +256,16 @@ position: relative;
 
 }
 
+#fontSettings{
+	position: relative;
+	margin:5px auto;
+
+}
+
+
+#fontSettings button{
+	width: 80px;
+}
 
 #feedbackForm{
 /* Container */
@@ -301,9 +310,22 @@ margin-left: 115px;
 }
 
 
+#pageindex{
+background-color: inherit;
+width: 40px;
+height: 15px;
+border-radius: 9%;
+position: relative;
+left: 43%;
+top: 2px;
+
+}
 
 
-
+#viewToggle{
+background: inherit;
+position: relative;
+}
 
 
 
