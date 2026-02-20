@@ -214,6 +214,15 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
         gallery.js.
       * The first stage of development is completed, next updated will see additional
         features implemented.
+        
+        
+    0.8.5
+    
+    Update Overview
+    
+      * Applied new functions for page indexing, screen view changing, and font size settings.
+      * Updated CSV catalogue for books catalogue.
+      * CSS changes and updates. 
       
 
 ----
