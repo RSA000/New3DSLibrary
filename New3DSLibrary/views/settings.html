@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+      <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=0">
       <meta charset="utf-8">
       <title>3DS Free Library</title>
       <link rel="icon" href="../assets/img/favicon/fav.png" type="image/x-icon">
+      <link id="base" rel="stylesheet" href="">
       <link id="theme" rel="stylesheet" href="">
+      <script src="../services/jquery-4.0.0.js"></script>
       <script src="../services/common.js"></script>
     </head>
     <body>
@@ -24,14 +26,15 @@
           <div class="lowerScreenContents" id="lowerScreenSettings">
             <div id="themeSettings">
               <div>
-                <button data-type="btn" data-name="blueberrypapaya" data-text="A light and fruity theme">Blueberry Avo Papaya</button>
-                <button data-type="btn" data-name="globalvillage" data-text="A warm and earthy theme">Global Village</button>
-                <button data-type="btn" data-name="starry" data-text="A cosmic and spaced out theme">Starry Sky</button>
-                <button data-type="btn" data-name="oldschool" data-text="An old-school 3DSpaint library theme">Old School</button>
+                <button class="themeButton" data-name="blueberrypapaya" data-text="A light and fruity theme">Blueberry Avo Papaya</button>
+                <button class="themeButton" data-name="globalvillage" data-text="A warm and earthy theme">Global Village</button>
+                <button class="themeButton" data-name="starry" data-text="A cosmic and spaced out theme">Starry Sky</button>
+                <button class="themeButton" data-name="oldschool" data-text="An old-school 3DSpaint library theme">Old School</button>
+                <button class="themeButton" data-name="garry" data-text="Ol Garebear">garry</button>
               </div>
               <div id="fontSettings">
-                <button data-type="btnf" data-name="up" data-text="Increase Font Size">Font+</button>
-                <button data-type="btnf" data-name="down" data-text="Decrease Font Size">Font-</button>
+                <button class="fontButton" data-name="up" data-text="Increase Font Size">Font+</button>
+                <button class="fontButton" data-name="down" data-text="Decrease Font Size">Font-</button>
 
               </div>
             </div>

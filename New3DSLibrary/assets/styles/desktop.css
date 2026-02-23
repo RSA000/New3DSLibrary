@@ -1,0 +1,112 @@
+/* Styles for the body */
+body {
+    position: grid;
+    text-align: center;
+    padding:5px;
+}
+
+
+.upperScreen {
+    width: 90%;
+    height: 60vh;
+    margin: 10px auto;
+}
+
+
+#upperScreenRead{
+    height: 95vh;
+}
+
+.upperScreenContents{
+    height: 100%;
+}
+
+.upperScreenText{
+    width: 50%;
+    margin: auto;
+    margin-top:50px;
+}
+
+#topHeading{
+    width: 40%;
+}
+
+
+#topSubtitle{
+width: 60%;
+}
+
+
+#indexPhotoR {
+    position: relative;
+    height: 25vh;
+    left: 25%;
+}
+
+
+#indexPhotoL {
+    position: relative;
+    height: 25vh;
+    left: -25%;
+}
+
+.lowerScreen {
+    background: inherit;
+    margin: auto;
+    height: 30vh;
+    width: 60%;
+    overflow-y: scroll;
+}
+
+
+
+.lowerScreen button{
+    display: inline;
+    padding: 5px;
+}
+
+
+#themeSettings{
+    position: grid;
+    justify-content: center;
+    margin: auto;
+    height:200px;
+    width: 50%;
+    overflow-y: scroll;
+}
+
+.lowerScreenContents {
+    margin: auto;
+    width: 70%;
+}
+
+.lowerScreenContents a{
+    width: 84%;
+    font-size: 175%;
+    display: inherit;
+    margin: 5px auto;
+
+}
+
+
+.lowerScreenContents button{
+    width: 84%;
+    font-size: 175%;
+    display: inherit;
+    margin: auto;
+}
+
+
+#textContainerRead {
+    position: relative;
+    top: 20px;
+    width: 85%;
+    height: 80vh;
+    margin: 10px auto;
+    overflow-y: scroll;
+}
+
+
+#readInputs{
+    margin: 45px auto;
+}

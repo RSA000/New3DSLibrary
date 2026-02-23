@@ -1,19 +1,27 @@
-Online Library for 3DS
+(New) Online Library for 3DS
 ----------------------------------
 
 ## Richard Sullivan Andison
 
 - A beta of the site can be found [here](https://rsa000.github.io/3DSLibrary/views/index.html)
 
-### Example of an optimized website for nintendo 3DS :
+### Features Include :
 
- - Dual screen compatibility
- - D-Pad (left control pad) navigation.
+ - GUI compatibility for desktop and 3DS systems
+ - Dual screen compatibility:
+    * Reading page can be top, bottom, or both screens.
+    * Menus are on the bottom screen while the top screen displays additional information.
  - Touchless navigation:
     * A - Select.
     * B - Navigate to previous page.
-    * Left/Right Triggers - Navigate to previous/next page. (On reading page). 
-    * D-pad - Select elements.
+    * D-pad - Navigate elements and flip/scroll on read page.
+ - Public Domain literature.
+ - Bookmarking (Page number and book are saved as cookies).
+ - Page Indexing.
+ - Font size settings.
+ - Themes.
+ - Feedback forms.
+ 
 
 #### JavaScript Uses.
 
@@ -32,7 +40,6 @@ Online Library for 3DS
 
 #### More
 
-This is a basic demo of the New 3DS library and builds on Simbas boilerplate/template repo.
 
 #### Changes
     
@@ -224,10 +231,27 @@ This is a basic demo of the New 3DS library and builds on Simbas boilerplate/tem
       * Updated CSV catalogue for books catalogue.
       * CSS changes and updates. 
       
+      
+    0.9.0
+    
+    Update Overview
+    
+      * Updated README. 
+      * Updated CSS structure:
+          * Base CSS for desktop and DS systems created.
+          * Updated JavaScript to updated base CSS file instead of changing attributes in codes.
+      * Implemented JQuery library across all JavaScript files. All code significantly refactored:
+          * Plans can be found in Unit_6 documentation.
+      * Updated catalogue to use JSON instead of CSV file.
+      * Updated getText to "get" function that takes arguement specifying datatype to increase utility.
+      * Overloaded Strings default "includes" method using Wolfyxon's fix. 
+      
+      
 
 ----
 
 #### Credits
+ - [JQuery.com/](https://jquery.com/) Provided primary source of documentation for JQuery refactorings and implementations.
  - [wolfyxon.github.io/3ds-web-stuff/](https://wolfyxon.github.io/3ds-web-stuff/) Provided several 
    functionalities for site and helped in understanding 3DS webprogramming quirks in general.
  - [simbas.github.com/n3dsite](http://simbas.github.com/n3dsite) This entire project was started by cloning this repo.

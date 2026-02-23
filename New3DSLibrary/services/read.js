@@ -1,46 +1,51 @@
-/**
- *
- * This is the main Javascript functionality behind the "read.html" page and provides a means for
- * updating the text within the page of a currently selected book.
- *
- *
- */
 
+/**
+ * Main functionality for "read.html" page
+ */
 (function() {
 
-    // If no book exists, redirect.
-    checkBookName();
-
-    // Get current book name.
+    // Get current book name and page number cookie values and store in variables (string, int).
     var bookName = getCookie("bookname");
-    var pages = 0;
-    // Get current book position cookie.
     var pageNum = parseInt(getCookie('pagenum'));
-    // Create list variable for storing sub-divided book text.
-    var textChunks = [];
-    // Store textContainerRead element.
-    var textContainer = document.getElementById('textContainerRead');
-    var pageIndex = document.getElementById("pageindex");
-    var viewToggle = document.getElementById("viewToggle");
+
+    // Instantiate variables pages, currentView, and textChunks (int, int, list).
+    var pages = 0;
     var currentView = 0;
+    var textChunks = [];
 
-
+    // Store textContainer, pageIndex, and viewToggle page elements as variables (JQueary objects).
+    var textContainer = $('#textContainerRead');
+    var pageIndex = $("#pageindex");
+    var viewToggle = $("#viewToggle");
 
 
 
     /**
-     * This function takes a number (0 or 1) that indicates the page direction and updates
-     * the textContainerReader
+     * Function alerts user if no bookname value is set to cookie and redirects to home page.
+     */
+    function checkCurrentBook() {
+        if (getCookie("bookname") != "") {
+            return;
+        }
+        else{
+            alert("No book found!\nPlease select a book from the catalogue first.");
+            window.location.replace("./index.html")
+        }
+    }
+
+
+    /**
+     * This function updates text container to pages[pageNum]
      *
-     * @param {Int} Int.
-     *
+     * @param {Int} Page number to update to.
      */
     function updatePage(pageNum){
 
-        // Display previous page.
-        textContainer.innerHTML = textChunks[pageNum];
-        textContainer.scrollTop = 0;
-        pageIndex.value = pageNum;
+        // Update inner HTML to pageNum index and scroll to top.
+        textContainer.html(textChunks[pageNum]);
+        textContainer.animate({scrollTop: "0px"}, 50);
+        pageIndex.val(pageNum);
+        // Update font size.
         checkFontSize();
         return;
     }
@@ -52,26 +57,27 @@
      * @param {String} - Text from literature in HTML format.
      */
     function loadBook(text) {
-        // Reset textChunks
+        // Reset textChunks contents
         textChunks = [];
-        // Insantiate chunk string, position, and text length.
+        // Insantiate chunk string, position.
         var chunk = "";
         var position = 0;
-        var textLength = text.length;
 
-        while (position < textLength) {
+        // While position is less than length of literature text.
+        while (position < text.length) {
             // Find next closing tag
             var closeTagStart = text.indexOf("</", position);
             // If not closing tags found.
             if (closeTagStart === -1) {
                 // Add remaining text
                 chunk += text.substring(position);
+                // Add current chunk to chunks if current chunk is not empty (ending of text).
                 if (chunk.length > 0) {
                     textChunks.push(chunk);
                 }
                 break;
             }
-            // Find end position index of the closing tag
+            // Otherwise, find end position index of the next closing </p> tag.
             var closeTagEnd = text.indexOf("p>", closeTagStart);
             // If no closing tag found.
             if (closeTagEnd === -1) {
@@ -82,13 +88,14 @@
                 }
                 break;
             }
-            // Add text up to and including the closing tag
-            var segmentEnd = closeTagEnd + 2; // include 'p>'
+            // Add text up to and include the closing tag
+            var segmentEnd = closeTagEnd + 2;
             chunk += text.substring(position, segmentEnd);
-            position = segmentEnd; // move past this tag
+            // Update position to end of last segment.
+            position = segmentEnd;
 
-            // If chunk is large enough, save and reset
-            if (chunk.length >= 1800) {
+            // If chunk is large enough, push current chunk to textChunks and reset
+            if (chunk.length >= pageSize) {
                 textChunks.push(chunk);
                 chunk = "";
             }
@@ -97,7 +104,7 @@
         if (chunk.length > 0) {
             textChunks.push(chunk);
         }
-        // Get length of pages and update page.
+        // Get length of pages and update page to first page.
         pages = textChunks.length;
         updatePage(pageNum);
     }
@@ -107,11 +114,11 @@
      * Process keydown logic. Call this when using window.onkeydown, and you want to use the global.js input detection system
      *
      * @param {event} keyBoardEvent.
-     * @param {element} element.
+     * @param {element} Javascript DOM element.
      */
-    function readHandleKeyDown(event, element){
+    function readKeyDown(event, element){
         // Prevent default action when key is pressed down.
-        preventKey(event);
+        event.preventDefault();
         // Switch case for each button press code.
         switch(event.keyCode){
             case UP:
@@ -141,58 +148,74 @@
                 }
                 break;
         }
-
     }
 
 
-
     // Add event listener for when content is loaded.
-    document.addEventListener('DOMContentLoaded', function(ev) {
+    $(document).ready(function() {
 
-         viewToggle.addEventListener("click", function(ev){
-             if (currentView === 0){
-                 textContainer.style.height = "185px";
-                 viewToggle.style.marginTop = "100px";
-                 currentView = 1;
-             }
-             else if (currentView === 1){
-                 textContainer.style.height = "175px";
-                 textContainer.style.width = "310px";
-                 textContainer.style.top = "215px";
-                 viewToggle.style.marginTop = "0px";
-                 pageIndex.style.top = "220px";
-                 viewToggle.style.top = "220px";
-                 currentView = 2;
-             }
-             else if (currentView === 2){
-                 textContainer.style.height = "400px";
-                 textContainer.style.width = "294px";
-                 textContainer.style.top = "5px";
-                 pageIndex.style.top = "0px";
-                 viewToggle.style.top = "0px";
-                 currentView = 0;
-             }
+        // If no book exists, redirect.
+        checkCurrentBook();
 
-         });
-
-        window.removeEventListener("keydown", handleKeyDown);
-
-
-        // Add event listener for when a key is pressed down.
-        pageIndex.addEventListener("keypress", function(e) {
-            if (e.keyCode === ENTER){
-                updatePage(pageIndex.value);
+        viewToggle.on("click", function(ev){
+            // Case for full screen changing to top screen only.
+            switch(currentView){
+                case 0:
+                    textContainer.css({
+                        "height": "185px"
+                    })
+                    viewToggle.css({
+                        "marginTop": "100px"
+                    });
+                    currentView = 1;
+                    break;
+                // Case for top screen only changing to bottom screen only.
+                case 1:
+                    textContainer.css({
+                        "height": "175px",
+                        "width": "294px",
+                        "top": "220px"
+                    });
+                    viewToggle.css({
+                        "marginTop": "0px",
+                        "top": "220px"
+                    });
+                    pageIndex.css({
+                        'top': '220px'
+                    });
+                    currentView = 2;
+                    break;
+                    // Case for lower screen only to full screen view.
+                case 2:
+                    textContainer.css({
+                        'height': '400px',
+                        'width': '294px',
+                        'top': '5px'
+                    });
+                    pageIndex.css("top", "0px");
+                    viewToggle.css("top", "0px");
+                    currentView = 0;
+                    break;
             }
         });
 
+        $(window).off("keydown", menuHandleKeyDown);
 
         // Add event listener for when a key is pressed down.
         window.addEventListener("keydown", function(e) {
-            readHandleKeyDown(e, document.getElementById('textContainerRead'));
+            readKeyDown(e, document.getElementById('textContainerRead'));
+        });
+
+
+        // Add event listener for when ENTER key is pressed on index.
+        pageIndex.on("keypress", function(e) {
+            if (e.keyCode === ENTER){
+                updatePage(parseInt(pageIndex.val()));
+            }
         });
 
         // Get book text and load into textContainerRead paragraph element in read.html.
-        getText("https://rsa000.github.io/3DSLibrary/assets/texts/" + bookName, loadBook);
+        get("https://rsa000.github.io/3DSLibrary/assets/texts/" + bookName, "html", loadBook);
 
-    }, false);
+    });
 })();

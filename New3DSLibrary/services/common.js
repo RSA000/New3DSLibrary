@@ -11,60 +11,153 @@ const ENTER = 13;
 // Declare constant value for centering screen.
 const centerX = 152;
 const centerY = 277;
+// Declare constant value for user agent value (device type).
+const deviceType = window.navigator.userAgent;
 
-// Set index and get elements tags.
+// Instantiate and set variable, index, to 0.
 var index = 0;
+// Set variable for page size (number of characters per page).
+var pageSize = 1850;
+
+
+
+// array.includes and string.includes does not work on the 3DS browser.
+/**
+ * <<<<<<<<<<<<<<<<<<<<  Wolfyxon's (modified) stuff >>>>>>>>>>>>>>>>>>>>>>>
+ * //////         https://github.com/Wolfyxon/3ds-web-stuff*         ///////
+ * <<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ *
+ * Overloaded method for String.includes instead of using function.
+ *
+ * Performs a linear interpolation between 2 numbers
+ * @param  {Object, String, Array} container The object you want to search in
+ * @param {*} search Value you want to check if exists
+ * @return {Boolean}
+ */
+String.prototype.includes = function(search) {
+    // 'this' refers to the string instance
+    if (typeof(this) === 'string' || this instanceof String) {
+        return this.indexOf(search) !== -1;
+    }
+    return false;
+};
 
 
 /**
- * The center function scrolls the screen to the 152,277 coordinates.
+ * Function returns if system is 3DS and false otherwise.
  */
-function center(){
-    window.scrollTo(centerX, centerY);
+function is3DS(){
+    // If userAgent string is equal to "Nintendo 3DS"
+    return deviceType.includes("Nintendo 3DS");
 }
 
 
 /**
- *
- * getText(url) returns a list of strings subdivided from a string acquired through an
- * XMLHttpRequest to a passed url.
+ *  configSelectables takes all anchors, themeButtons, and fontButtons of the
+ *  current DOM and adds the
+ *  appropriate eventlistener functions for each.
+ */
+function configSelectables(){
+    // Select all anchors and buttons as JQ object.
+    var elements = $('a, button');
+    var themeButtons = $(".themeButton");
+    var fontButtons = $(".fontButton");
+
+    // Set tabindex for each element (index increments and is set to each elements tabindex attribute.
+    elements.each(function(index) {
+        $(this).attr('tabindex', index);
+    });
+
+    // Attach functions for focus and blur events.
+    elements.on('focus', active)
+    .on('blur', inactive);
+
+    // Set event handlers for theme button keydown events
+    themeButtons.on('keydown', function(ev) {
+        if (ev.keyCode === 32 || ev.keyCode === 13) {
+            // If keydown is A key
+            changeTheme(this.dataset.name);
+        }
+    }).on('click', function() {
+        // If keydown is A key
+        changeTheme(this.dataset.name);
+    });
+
+    // Set event handlesrs for font button keydown events.
+    fontButtons.on('keydown', function(ev) {
+        if (ev.keyCode === 32 || ev.keyCode === 13) {
+            fontButtonClick.call(this, ev);
+        }
+    }).on('click', fontButtonClick);
+}
+
+
+/**
+ * Function calls necessary logic to configur browser for 3DS devices
+ */
+function config3DS(){
+    $("#base").attr("href", "../assets/styles/ds.css");
+    // Set interval to center screen every 33 milliseconds (30fps).
+    setInterval(function(){
+        window.scrollTo(centerX, centerY);
+    }, 33);
+
+
+    // Store all DOM anchors in variable.
+    var anchors = $('a[nc]');
+    // Add non-3DS compatible warning to any relevant elements.
+    anchors.on("click", function(event){
+        // Alert that link is not supported.
+        alert("The 3DS doesn't support this page. Please open \n" + $(this).attr('href') + "\n on a modern browser)");
+        // Prevent default action (navigating to link).
+        event.preventDefault();
+    });
+    // Add event listener alert error events (necessary to see errors on 3DS system)..
+    window.addEventListener("error", function(e) {
+        alert(e.filename + ":" + e.lineno + " " + e.message);
+    }, false);
+}
+
+
+/**
+ * Function sets CSS for desktop view
+ */
+function configDesktop() {
+
+}
+
+
+/**
+ * get sends a JQuery GET request with a given url
+ * and performs a function (callback) with that text.
  *
  * @param {String} url
  * @param {Function} callback
  */
-function getText(url, callback){
-    // Create a new XMLHttpRequest object and initialize a GET request to the passed url.
-    var xhr = new XMLHttpRequest();
-    // GET request using url, asychronous = true.
-    xhr.open('GET', url, true);
-    // Configure what function to perform when a state change occurs.
-    xhr.onreadystatechange = function() {
-        // A readyState value of 4 means GET state is done (4).
-        if (xhr.readyState === 4) {
-            // If status code is not an error.
-            if (xhr.status >= 200 && xhr.status < 300) {
-                // Send response text of request to callback function.
-                if (callback) callback(xhr.responseText);
-            }
-            // Otherwise, log status and alert user.
-            else{
-                console.error('Error loading text file:', xhr.statusText);
-                alert("Error loading text file:" + xhr.statusText + url);
-            }
+function get(url, dataType, callback) {
+    $.ajax({
+        // Set url and method.
+        url: url,
+        method: 'GET',
+        dataType: dataType,
+        // On success, perform callback function with returned data.
+        success: function(data) {
+            if (callback) callback(data);
+        },
+        // On error alert user.
+        error: function(textStatus, errorThrown) {
+            console.error('Error loading text file:', errorThrown);
+            alert("Error loading text file: " + errorThrown + " " + url);
         }
-    };
-    // Send request.
-    xhr.send();
+    });
 }
+
 
 
 /**
  * <<<<<<<<<<<<<<<<<  w3schools (modified) stuff >>>>>>>>>>>>>>>>>>>>>>>
  * //////  https://www.w3schools.com/js/js_cookies.asp          ///////
  * <<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
- */
-
-/**
  * setCookie creates a cookie (cname) with a value (cvalue)
  * that expires in a set amount of days (exdays).
  *
@@ -81,36 +174,9 @@ function setCookie(cname, cvalue, exdays) {
 
 
 /**
- * Function checks cookie, "fontsize," value and updates elements accordingly.
- * If no font is set, medium (13) is set.
- */
-function checkFontSize(){
-    var fontSize = parseInt(getCookie("fontsize"));
-    if (fontSize){
-        var divs = document.getElementsByTagName("div");
-        for (var i = 0; i < divs.length; i++){
-            divs[i].style.fontSize = (fontSize + 3) + "px";
-        }
-        var paragraphs = document.getElementsByTagName("p");
-        for (var i = 0; i < paragraphs.length; i++) {
-            paragraphs[i].style.fontSize = fontSize + "px";
-        }
-        var spans = document.getElementsByTagName("span");
-        for (var i = 0; i < spans.length; i++){
-            spans[i].style.fontSize = (fontSize + 1) + "px";
-        }
-        return;
-    }
-    else{
-        alert("No font size found\nDefault set (13px)")
-        setCookie("fontsize", "13", 364);
-        checkFontSize();
-        return;
-    }
-}
-
-
-/**
+ * <<<<<<<<<<<<<<<<<  w3schools (modified) stuff >>>>>>>>>>>>>>>>>>>>>>>
+ * //////  https://www.w3schools.com/js/js_cookies.asp          ///////
+ * <<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
  * Function returns value of a cookie if cname value is valid cookie name.
  *
  * @param {cname} - String
@@ -135,19 +201,28 @@ function getCookie(cname) {
     }
     return "";
 }
-// End of w3schools.com
 
 
 /**
- * Function alerts user if no bookname value is set to cookie and redirects to home page.
+ * Function checks cookie, "fontsize," value and updates elements accordingly.
+ * If no font is set, medium (13) is set.
  */
-function checkBookName() {
-    if (getCookie("bookname") != "") {
+function checkFontSize() {
+    var fontSize = parseInt(getCookie("fontsize"));
+    // If fontSize is a number greater than 0.
+    if (fontSize) {
+        // Get and apply font settings with JQueary to all divs, paragraphs and spanners.
+        $("div").css("font-size", (fontSize + 3) + "px");
+        $("p").css("font-size", fontSize + "px");
+        $("span").css("font-size", (fontSize + 1) + "px");
         return;
     }
-    else{
-        alert("No book found!\nPlease select a book from the catalogue first.");
-        window.location.replace("../index.html")
+    // Otherwise, updated font to default size.
+    else {
+        alert("No font size found\nDefault set (13px)");
+        setCookie("fontsize", "13", 364);
+        checkFontSize();
+        return;
     }
 }
 
@@ -155,39 +230,28 @@ function checkBookName() {
 /**
  * Function checks if a theme is set. If a theme is not set, default theme is set
  */
-function checkTheme(){
-    // Get value of theme cookie.
+function checkTheme() {
+    // Get theme cookie, and theme attributes from page and store in variables.
     var themeCookie = getCookie("theme");
-    // Get document CSS link elements (index and other pages).
-    var themeTag = document.getElementById("theme");
-    var indexThemeTag = document.getElementById("themeindex");
+    var themeTag = $("#theme");
+    var images = $('img.indexImage');
 
-    // Set theme if cookie exists.
-    if (themeCookie != "") {
-        // Case for pages in views folder.
-        if (themeTag != null){
-            themeTag.setAttribute("href", ("../assets/styles/" + themeCookie + ".css"));
-            setCookie("theme", themeCookie, 364);
-            return;
-        }
-        // Case for index.html page.
-        else if (indexThemeTag != null){
-            // Store all upper screen image elements in variable.
-            var images = document.getElementsByClassName("upperScreenImages")[0].querySelectorAll("img");
-            indexThemeTag.setAttribute("href", ("assets/styles/" + themeCookie + ".css"));
-            // Set Home page upper screen photos.
-            for (var i = 0; i < images.length; i++){
-                images[i].setAttribute('src', ("https://rsa000.github.io/3DSLibrary/assets/img/index/" + themeCookie + ".gif"));
-            }
+    // If cookie value is not empty.
+    if (themeCookie !== "") {
+        // If themeTag is truethy (length is not 0).
+        if (themeTag.length) {
+            themeTag.attr("href", "../assets/styles/" + themeCookie + ".css");
+            images.attr('src', 'https://rsa000.github.io/3DSLibrary/assets/img/index/' + themeCookie + '.gif');
             setCookie("theme", themeCookie, 364);
             return;
         }
     }
-    // Case for no theme set.
-    else{
+    // Otherwise, set default theme.
+    else {
         alert("no theme set");
-        if (themeTag != null) themeTag.setAttribute('href', ("../assets/styles/globalvillage.css"));
-        if (indexThemeTag != null) indexThemeTag.setAttribute('href', ("../assets/styles/globalvillage.css"));
+        if (themeTag.length) {
+            themeTag.attr("href", "../assets/styles/globalvillage.css");
+        }
         setCookie("theme", "globalvillage", 364);
         checkTheme();
         return;
@@ -208,69 +272,36 @@ function changeTheme(themeName){
 }
 
 
-/* Simba's (modified) stuff*/
-
-/* The active function changes the upper screen heading and subtitle the the selected elemements inner HTML and description attribute */
-var active = function(ev) {
-    // get top screen Heading and subtitles and store in variables.
-    var topHeading = document.getElementsByClassName("topHeading")[0];
-    var topSubtitle = document.getElementsByClassName("topSubtitle")[0];
-    // Get innerHTML and description attributes of current element.
-    // Update innerHTML of top heading and subtitle to heading and subtitle values.
-    topHeading.innerHTML = this.innerHTML;
-    topSubtitle.innerHTML = this.dataset.text;
+/**
+ * Function updates topHeading and topSubtitle to elements value.
+ */
+var active = function() {
+    // Get topHeading and subTitle element.
+    var topHeading = $(".topHeading");
+    var topSubtitle = $(".topSubtitle");
+    // Update to current elements innerHTML and "text" data attribute.
+    topHeading.html(this.innerHTML);
+    topSubtitle.html($(this).data("text"));
 };
 
 
-/*Function returns title to original message when no items are selected. */
-var inactive = function(ev) {
-    // Get top heading and subtitle tags (<h1> and <p>, respectively).
-    var topHeading = document.getElementsByClassName("topHeading")[0];
-    var topSubtitle = document.getElementsByClassName("topSubtitle")[0];
-    // Update heading and subtitle.
-    topHeading.innerHTML = topHeading.dataset.text;
-    topSubtitle.innerHTML = topSubtitle.dataset.text;
-};
-
-/* End of Simbas */
-
-
-var  bttnClick = function(ev){
-    // If keydown is A key
-    if ((ev.keyCode === 32) || (ev.keyCode == 13)){
-        changeTheme(this.dataset.name);
-    }
+/**
+ * Function updates topHeading and topSubtitle to default values.
+ */
+var inactive = function() {
+    // Get topHeading and subTitle element.
+    var topHeading = $(".topHeading");
+    var topSubtitle = $(".topSubtitle");
+    // Set heading and subtitle to default value.
+    topHeading.html(topHeading.data("text"));
+    topSubtitle.html(topSubtitle.data("text"));
 };
 
 
-var  bttnClickMouse = function(ev){
-    // If keydown is A key
-    changeTheme(this.dataset.name);
-};
-
-
-var  bttnfClick = function(ev){
-    var currentFont = parseInt(getCookie("fontsize"));
-    var currentSubtitle = document.getElementsByClassName("topSubtitle")[0];
-    // If keydown is A key
-    if ((ev.keyCode === 32) || (ev.keyCode == 13)){
-        if ((this.dataset.name === "up") && (currentFont < 18)){
-            setCookie("fontsize", currentFont + 1, 364);
-            currentSubtitle.innerHTML = "Current Size: " + (currentFont + 1);
-            currentSubtitle.style.fontSize = (currentFont + 1) + "px";
-        }
-       else if ((this.dataset.name === "down") && (currentFont > 10)){
-            setCookie("fontsize", currentFont - 1, 364);
-            currentSubtitle.innerHTML = "Current Size: " + (currentFont - 1);
-            currentSubtitle.style.fontSize = (currentFont - 1) + "px";
-
-
-        }
-    }
-};
-
-
-var  bttnfClickMouse = function(ev){
+/**
+ * Function updates font according to elements name (up or down)
+ */
+var  fontButtonClick = function(ev){
     // If keydown is A key
     var currentFont = parseInt(getCookie("fontsize"));
     var currentSubtitle = document.getElementsByClassName("topSubtitle")[0];
@@ -301,37 +332,13 @@ var catClick = function(ev) {
 };
 
 
-
-/**
- *
- * This prevents the browser from moving the page using the arrow keys
- * @param {keyboardEvent} event
- */
-function preventKey(event){
-    // Allow backspace, F5 (refresh), and ENTER.
-    var keyCode = event.keyCode;
-    if ((keyCode === BACKSPACE) || (keyCode === F5) || (keyCode == ENTER)){
-        return true;
-    }
-    // Allow character input.
-    if(event.charCode || (event.key && event.key.length === 1 ))
-        return true;
-    // Otherwise, prevent default action for event and return false.
-    else{
-        event.preventDefault();
-        return false;
-    }
-}
-// end of wolfyxon
-
-
 /**
  * Process keydown logic. Call this when using window.onkeydown, and you want to use the global.js input detection system
  * @param {KeyboardEvent} event
  */
-function menuHandleKeyDown(event, element){
+function menuHandleKeyDown(event){
     // Prevent default action when key is pressed down.
-    preventKey(event);
+    event.preventDefault();
 
     var elements = document.querySelectorAll('a, button');
 
@@ -367,64 +374,11 @@ function menuHandleKeyDown(event, element){
                 // Focus on current elements index.
                 elements[index].focus();
                 break;
+            case ENTER:
+                elements[index].click();
         }
     }
 }
-
-function handleKeyDown(e) {
-    menuHandleKeyDown(e, document.getElementById('lowerScreenContents'));
-}
-
-
-/**
- * <<<<<<<<<<<<<<<<<  Wolfyxon's (modified) stuff >>>>>>>>>>>>>>>>>>>>>>>
- * //////  https://github.com/Wolfyxon/3ds-web-stuff*  ///////
- * <<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
- */
-
-/**
- * includes takes a container and a search element and returns a boolean value
- * indicating if it exists within the container.
- *
- * @param {container} - Container to serach in.
- * @param {String} - String to check for.
- */
-function includes(container,search){
-    // If container is a string or an array.
-    if (typeof(container) === 'string' || container instanceof Array){
-        // Return true if indexo of container search is not -1 (string case).
-        return container.indexOf(search) !== -1;
-    }
-    // Return true if container index is not undefined (array case).
-    return container[search] !== undefined;
-}
-
-
-/**
- * Function returns if system is 3DS and false otherwise.
- */
-function is3DS(){
-    // If userAgent string is equal to "Nintendo 3DS"
-    return includes(window.navigator.userAgent,"Nintendo 3DS");
-}
-
-
-/**
- * Register an <a> that isn't meant to be opened on the 3DS
- * @param {HTMLelementsElement} a
- */
-function registerNon3DSlink(a){
-    // Add event listener for when elements is clicked.
-    a.addEventListener("click", function (e){
-        // Alert that link is not supported.
-        alert("The 3DS doesn't support this page. Please open \n" + a.href + "\n on a modern browser)");
-        // Prevent default action (navigating to link).
-        e.preventDefault();
-        return false;
-    }, false);
-}
-
-
 
 
 /*
@@ -432,66 +386,27 @@ function registerNon3DSlink(a){
  */
 (function(){
     /* When content is loaded. */
-    document.addEventListener('DOMContentLoaded', function(ev) {
-        var elements = document.querySelectorAll('a, button');
-        index = 0;
-
-        // Call center function every milisecond.
-        setInterval(center);
-        // Check current theme.
+     $(document).ready(function() {
+        // Set selectable element events, check current theme and font size.
+        configSelectables();
         checkTheme();
         checkFontSize();
-
-
-
-        window.addEventListener("keydown", handleKeyDown);
-
-        // For each elements, add event listener.
-        for(var i = 0, l = elements.length; i<l; i++){
-            // For each elements, add event listener.
-
-            elements[i].setAttribute('tabindex', i);
-            // When focused on, apply active function with "this" selected elements.
-            elements[i].addEventListener('focus', active, false);
-            // When no elements are selected, revert to greeting heading and subtitle.
-            elements[i].addEventListener('blur', inactive, false);
-
-            if (elements[i].dataset.type === 'btn') {
-                elements[i].addEventListener("keydown", bttnClick, false);
-                elements[i].addEventListener("click", bttnClickMouse, false);
-            }
-
-
-            if (elements[i].dataset.type === 'btnf') {
-                elements[i].addEventListener("keydown", bttnfClick, false);
-                elements[i].addEventListener("click", bttnfClickMouse, false);
-            }
-
-        }
-
-
-
-
+        // Set function for keydown events.
+        $(window).keydown(menuHandleKeyDown);
 
         // If device is 3DS.
         if (is3DS()){
-
-            // Add event listener alert error events (necessary to see errors on 3DS system)..
-            window.addEventListener("error", function(e) {
-                alert(e.filename + ":" + e.lineno + " " + e.message);
-            }, false);
-
-            // Add non-3DS compatible warning to any relevant elements.
-            for(var i = 0, l = elements.length; i<l; i++){
-                // If 3DS attribute exists, add warning to link.
-                if (elements[i].getAttribute("nc")){
-                    registerNon3DSlink(elements[i]);
-                }
-            }
+            // Configure 3DS
+            config3DS();
         }
-        // Otherwise, set screen for desktop computers.
+        // Configuration for regular desktop.
         else{
-            document.body.style.margin = "10px auto";
+            // Set base CSS to desktop.
+            $("#base").attr("href", "../assets/styles/desktop.css");
+            // Update pagesize to desktop.
+            pageSize = 4000;
+            // Hide screen changing button.
+            $("#viewToggle").hide();
         }
-    }, false);
+    });
 })()

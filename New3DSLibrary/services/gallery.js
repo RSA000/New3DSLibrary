@@ -6,14 +6,6 @@
     var galleryImage = document.getElementById("galleryImage");
     var index = 0;
 
-    /* Simba's */
-
-    /* The active function changes the upper screen heading and subtitle the the selected elemements inner HTML and description attribute */
-    var active = function(ev) {
-        galleryImage.setAttribute("src", this.src);
-    };
-
-    /* End of Simbas */
 
     /**
      * Process keydown logic. Call this when using window.onkeydown, and you want to use the global.js input detection system
@@ -21,7 +13,7 @@
      */
     function galleryHandleKeyDown(event, element){
         // Prevent default action when key is pressed down.
-        preventKey(event);
+        event.preventDefault();
         // Switch case for each button press code.
         switch(event.keyCode){
             case UP:
@@ -58,9 +50,9 @@
 
 
     /* When content is loaded. */
-    document.addEventListener('DOMContentLoaded', function(ev) {
+    $(document).ready(function() {
 
-        window.removeEventListener("keydown", handleKeyDown);
+        window.removeEventListener("keydown", menuHandleKeyDown);
 
         // Add event listener for when a key is pressed down.
         window.addEventListener("keydown", function(e) {
@@ -71,8 +63,9 @@
         for(var i = 0; i < slideLength; i++){
             slides[i].setAttribute('tabindex', i);
             // When focused on, apply active function with "this" selected anchor.
-            slides[i].addEventListener('focus', active, false);
+            slides[i].addEventListener('focus', function(){
+                galleryImage.setAttribute("src", this.src);
+            }, false);
         }
-    }, false);
-
+    });
 })()

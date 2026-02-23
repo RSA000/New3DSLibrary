@@ -5,7 +5,7 @@
     index = 0;
     // Set empty csvItems list
     var csvItems = [];
-    var url = "https://rsa000.github.io/3DSLibrary/assets/texts/catalog.csv";
+    var url = "https://rsa000.github.io/3DSLibrary/assets/texts/catalogue.json";
 
 
     /**
@@ -14,32 +14,32 @@
      * @param {list} csvItems are a list of CSV entries (book name, book description, and url to book).
      * @param {element} DOM element to update inner HTML code.
      */
-    function populateCatalogue(csvItems, element){
+    function populateCatalogue(jsonItems, element) {
         var catalogue = "";
 
-        // Start from 1 if first row is header
-        for (var i = 0; i < csvItems.length; i++){
-            var row = csvItems[i];
+        // Loop through each item in the JSON array
+        for (var i = 0; i < jsonItems.length; i++) {
+            var row = jsonItems[i];
             var name = row[0];
             var description = row[1];
             var url = row[2];
 
-            catalogue += '<a href="' + 'https://rsa000.github.io/3DSLibrary/views/read.html"' + ' data-bookname="' + url + "\"" + ' class="cat" ' + ' data-text="' + description + '">' + name + '</a>';
+            // Generate the anchor tag for each item
+            catalogue += '<a href="https://rsa000.github.io/3DSLibrary/views/read.html" ' +
+            'data-bookname="' + url + '" ' +
+            'class="cat" ' +
+            'data-text="' + description + '">' + name + '</a>';
         }
-        // Insert the generated HTML into the element with id 'elementId'
-        element.innerHTML = catalogue;
 
-        var elements = document.getElementsByClassName('cat');
+        // Insert the generated HTML into the specified element
+        element.html(catalogue);
 
-        for (var i = 0, l = elements.length; i<l; i++){
-            elements[i].removeEventListener("keydown", menuHandleKeyDown);
-            elements[i].setAttribute('tabindex', i);
-            // When focused on, apply active function with "this" selected elements.
-            elements[i].addEventListener('focus', active, false);
-            // When no elements are selected, revert to greeting heading and subtitle.
-            elements[i].addEventListener('blur', inactive, false);
-            elements[i].addEventListener("click", catClick, false);
-        }
+        // Add event listeners to each generated element
+        var elements = $(".cat");
+
+        elements.on('focus', active);
+        elements.on('blur', inactive);
+        elements.on('click', catClick);
     }
 
 
@@ -48,30 +48,30 @@
      *
      * @param {string} text - Raw text from CSV.
      */
-    function parseCSV(text){
-        // Create list for csv entries.
-        csvItems = [];
-        var lowerScreenContents = document.getElementById("catalogueOptions");
-        // Store each CSV line in variable.
-        var lines = text.trim().split("\n");
+    function parseJSON(jsonData) {
+        // Create list for JSON entries.
+        var jsonItems = [];
 
-        // For each line.
-        for (var i = 0; i < lines.length; i++) {
-            // Entries are anything between two quoates and ignore spacing and commas in between; match multiple items.
-            var entries = lines[i].match(/(".*?[^ ,]+")/g);
-            // If there are any entries.
-            if (entries) {
-                // Remove surrounding quotes and add entry.
-                entries = entries.map(function(entry) {
-                    // Replace quote characters with empty string.
-                    return entry.replace(/^"|"$/g, '');
-                });
-                csvItems.push(entries);
-            }
+        // Assuming jsonData is an array of objects.
+        if (Array.isArray(jsonData)) {
+            jsonData.forEach(function(item) {
+                var entries = [];
+                for (var key in item) {
+                    if (item.hasOwnProperty(key)) {
+                        entries.push(item[key]);
+                    }
+                }
+                jsonItems.push(entries);
+            });
+        } else {
+            console.error("JSON Error");
+            return;
         }
-        // Populate lowerScreenContents with anchor elements created from csv File.
-        populateCatalogue(csvItems, lowerScreenContents);
-    }
 
-    getText(url, parseCSV);
+        var lowerScreenContents = $("#catalogueOptions");
+        // Populate lowerScreenContents with anchor elements created from JSON data.
+        populateCatalogue(jsonItems, lowerScreenContents);
+}
+
+    get(url, "json", parseJSON);
 })()
