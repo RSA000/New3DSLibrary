@@ -3,7 +3,7 @@ Online Library for 3DS
 
 ## Richard Sullivan Andison
 
-- A beta of the site can be found [here](https://rsa000.github.io/3DSLibrary/index.html)
+- A beta of the site can be found [here](https://rsa000.github.io/3DSLibrary/views/index.html)
 
 ### Example of an optimized website for nintendo 3DS :
 
