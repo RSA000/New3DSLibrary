@@ -134,7 +134,7 @@ function configDesktop() {
  * @param {String} url
  * @param {Function} callback
  */
-function get(url, dataType, callback) {
+function DSFetch(url, dataType, callback) {
     $.ajax({
         // Set url and method.
         url: url,
@@ -337,7 +337,13 @@ var catClick = function(ev) {
  * @param {KeyboardEvent} event
  */
 function menuHandleKeyDown(event){
-    // Prevent default action when key is pressed down.
+    // Allow backspaces, enter key, refresh, and character inputs.
+    if(event.keyCode === 8) return true; //backspace
+    if(event.keyCode === 116) return true; //f5
+    if(event.keyCode === 13) return true; //enter
+    if(event.charCode || (event.key && event.key.length === 1 )) return true
+
+    // Prevent default action when any other key is pressed down.
     event.preventDefault();
 
     var elements = document.querySelectorAll('a, button');
@@ -387,12 +393,12 @@ function menuHandleKeyDown(event){
 (function(){
     /* When content is loaded. */
      $(document).ready(function() {
+        // Set function for keydown events.
+        $(window).keydown(menuHandleKeyDown);
         // Set selectable element events, check current theme and font size.
         configSelectables();
         checkTheme();
         checkFontSize();
-        // Set function for keydown events.
-        $(window).keydown(menuHandleKeyDown);
 
         // If device is 3DS.
         if (is3DS()){
@@ -401,7 +407,7 @@ function menuHandleKeyDown(event){
         }
         // Configuration for regular desktop.
         else{
-            // Set base CSS to desktop.
+            // Set base CSS to desktop. (currently, just the same as ds, but different margins)
             $("#base").attr("href", "../assets/styles/desktop.css");
             // Update pagesize to desktop.
             pageSize = 4000;

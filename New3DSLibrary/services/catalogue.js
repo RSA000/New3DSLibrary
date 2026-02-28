@@ -71,7 +71,7 @@
         var lowerScreenContents = $("#catalogueOptions");
         // Populate lowerScreenContents with anchor elements created from JSON data.
         populateCatalogue(jsonItems, lowerScreenContents);
-}
+    }
 
-    get(url, "json", parseJSON);
+    DSFetch(url, "json", parseJSON);
 })()

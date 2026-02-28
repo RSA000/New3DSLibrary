@@ -215,7 +215,7 @@
         });
 
         // Get book text and load into textContainerRead paragraph element in read.html.
-        get("https://rsa000.github.io/3DSLibrary/assets/texts/" + bookName, "html", loadBook);
+        DSFetch("https://rsa000.github.io/3DSLibrary/assets/texts/" + bookName, "html", loadBook);
 
     });
 })();
